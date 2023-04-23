@@ -16,8 +16,15 @@ class Player{
     getWagePerClick(){
         return this.#wagePerClick;
     }
+    addWagePerClick(additionalWagePerClick){
+        this.#wagePerClick += additionalWagePerClick;
+    }
+    addDailyWage(additionalDailyWage){
+        this.#dailyWage += additionalDailyWage;
+    }
     click(){
         this.#wallet.deposit(this.getWagePerClick());
+        return this.#wallet.getMoney();
     }
 }
 
