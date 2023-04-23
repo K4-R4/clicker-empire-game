@@ -1,9 +1,18 @@
+import { Wallet } from "Wallet.js";
+
 class Player{
-    constructor(name, age, wagePerClick, dailyWage){
-        this.name = name;
-        this.age = age;
-        this.wagePerClick = wagePerClick;
-        this.dailyWage = dailyWage;
+    constructor(name, age, initialCapital, wagePerClick, dailyWage){
+        this.#name = name;
+        this.#age = age;
+        this.#wallet = new Wallet(initialCapital);
+        this.#wagePerClick = wagePerClick;
+        this.#dailyWage = dailyWage;
+    }
+    getWagePerClick(){
+        return this.#wagePerClick;
+    }
+    click(){
+        this.#wallet.deposit(this.getWagePerClick());
     }
 }
 

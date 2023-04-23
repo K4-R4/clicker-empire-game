@@ -20,3 +20,5 @@ class Wallet{
         return amountToWithdraw;
     }
 }
+
+export { Wallet };
