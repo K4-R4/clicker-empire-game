@@ -1,4 +1,5 @@
 class Wallet{
+    #money;
     constructor(money){
         this.#money = money;
     }

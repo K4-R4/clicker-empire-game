@@ -1,6 +1,11 @@
-import { Wallet } from "Wallet.js";
+import { Wallet } from "./Wallet.js";
 
 class Player{
+    #name;
+    #age;
+    #wallet;
+    #wagePerClick;
+    #dailyWage;
     constructor(name, age, initialCapital, wagePerClick, dailyWage){
         this.#name = name;
         this.#age = age;

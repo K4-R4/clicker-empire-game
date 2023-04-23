@@ -1,4 +1,8 @@
 class Item{
+    #name;
+    #maxStock;
+    #stockInUse;
+    #price;
     constructor(name, maxStock, price){
         this.#name = name;
         this.#maxStock = maxStock;
@@ -21,3 +25,5 @@ class Item{
         return amountToBuy;
     }
 }
+
+export { Item };
