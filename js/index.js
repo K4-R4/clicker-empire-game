@@ -1,7 +1,7 @@
 import { Player } from "./Player.js";
-import { Item } from "./Item.js";
+import { Game } from "./Game.js";
 
 let player = new Player("kt", 20, 50000, 25, 100);
 console.log(player.getWagePerClick());
-let item = new Item("machine", 100, 298);
-console.log(item.buy(90));
+let game = new Game();
+console.log(JSON.parse(game));
