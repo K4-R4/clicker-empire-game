@@ -6,7 +6,7 @@ class Player{
     #wallet;
     #wagePerClick;
     #dailyWage;
-    constructor(name, age, initialCapital, wagePerClick, dailyWage){
+    constructor(name, age = 20, initialCapital = 50000, wagePerClick = 25, dailyWage = 0){
         this.#name = name;
         this.#age = age;
         this.#wallet = new Wallet(initialCapital);
