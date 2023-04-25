@@ -30,11 +30,11 @@ class Application{
     }
     generateGamePage(){
         const container = document.createElement("div");
-        container.classList.add("bg-white", "d-flex", "justify-content-center", "align-items-center", "col-12", "text-center", "p-4");
+        container.classList.add("bg-dark", "d-flex", "justify-content-center", "align-items-center", "col-12", "text-center");
         const leftColumn = document.createElement("div");
-        leftColumn.classList.add("col-5");
+        leftColumn.classList.add("col-5", "bg-secondary", "my-2", "ml-2", "mr-1");
         const rightColumn = document.createElement("div");
-        rightColumn.classList.add("col-7");
+        rightColumn.classList.add("col-7", "bg-secondary", "my-2", "mr-2", "ml-1");
         leftColumn.innerHTML =
             `
                 <p>Hamburger</p>
