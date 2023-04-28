@@ -7,7 +7,7 @@ class Investment extends Item{
         this.#interest = interest;
     }
     provideBenefit(player, amountToBuy){
-        player.addDailyWage(this.price * amountToBuy * this.#interest);
+        player.addDailyWage(super.getPrice() * amountToBuy * this.#interest);
     }
 }
 

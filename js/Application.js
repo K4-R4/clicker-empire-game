@@ -14,6 +14,7 @@ class Application{
             this.displayBlock(this.#initialPage);
             this.displayNone(this.#gamePage);
             this.#gamePage.append(this.generateGamePage());
+            this.#game.start();
         });
     }
     displayNone(ele){
@@ -25,24 +26,43 @@ class Application{
         ele.classList.remove("d-block");
     }
     initializeUserAccount(){
-        const playerName = this.#loginForm.querySelector(`input[name="user-name"]`);
+        const playerName = this.#loginForm.querySelector(`input[name="user-name"]`).value;
         return new Player(playerName);
     }
     generateGamePage(){
+        const playerStats = this.#game.getPlayerStats();
         const container = document.createElement("div");
-        container.classList.add("bg-dark", "d-flex", "justify-content-center", "align-items-center", "col-12", "text-center");
+        container.classList.add("bg-dark", "d-flex", "justify-content-center", "align-items-center", "col-12", "text-white", "text-center");
+
         const leftColumn = document.createElement("div");
-        leftColumn.classList.add("col-5", "bg-secondary", "my-2", "ml-2", "mr-1");
+        leftColumn.classList.add("col-5", "d-flex", "bg-secondary", "my-2", "ml-2", "mr-1");
+        const scoreContainer = document.createElement("div");
+        scoreContainer.classList.add("col-12");
+        scoreContainer.innerHTML =
+            `
+                <h3>${playerStats.hamburgerCount} Burgers</h3>
+                <h5>one click $${playerStats.wagePerClick}</h5>
+            `;
+        // add a hamburger image later
+        const hamburgerIconContainer = document.createElement("div");
+        leftColumn.append(scoreContainer, hamburgerIconContainer);
+
         const rightColumn = document.createElement("div");
         rightColumn.classList.add("col-7", "bg-secondary", "my-2", "mr-2", "ml-1");
-        leftColumn.innerHTML =
+        const playerStatsContainer = document.createElement("div");
+        playerStatsContainer.classList.add("col-12", "d-flex", "flex-wrap", "justify-content-around", "align-items-center", "py-2");
+        playerStatsContainer.innerHTML =
             `
-                <p>Hamburger</p>
+                <div class="bg-dark col-5 h5 p-3 my-2">${playerStats.name}</div>
+                <div class="bg-dark col-5 h5 p-3 my-2">${playerStats.age} years old</div>
+                <div class="bg-dark col-5 h5 p-3 my-2">${playerStats.daysGoneSinceBusinessStart} days</div>
+                <div class="bg-dark col-5 h5 p-3 my-2">$${playerStats.money}</div>
             `;
-        rightColumn.innerHTML =
-            `
-                <p>Info</p>
-            `;
+        // add contents in showcase
+        const showcaseContainer = document.createElement("div");
+        rightColumn.append(playerStatsContainer, showcaseContainer);
+        console.log(playerStats);
+
         container.append(leftColumn, rightColumn);
         return container;
     }
