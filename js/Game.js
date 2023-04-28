@@ -22,13 +22,14 @@ class Game{
             new RealEstate("Bullet-Speed Sky Railway", 10000000000000, 30000000000)
         ];
     }
-    start(){}
-    update(){
-        setInterval(function(){
+    getPlayerStats(){
+        return this.#player.getPlayerInformation();
+    }
+    start(){
+        setInterval(() => {
             this.#player.workForDay();
         }, this.#updatePerMillisecond);
     }
-    draw(){}
 }
 
 export { Game };

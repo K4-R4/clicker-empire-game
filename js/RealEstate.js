@@ -7,7 +7,7 @@ class RealEstate extends Item{
         this.#additionalDailyWage = additionalDailyWage;
     }
     provideBenefit(player, amountToBuy){
-        player.addDailyWage(this.additionalDailyWage * amountToBuy);
+        player.addDailyWage(this.#additionalDailyWage * amountToBuy);
     }
 }
 
