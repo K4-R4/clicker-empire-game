@@ -32,10 +32,23 @@ class Application{
     generateGamePage(){
         const playerStats = this.#game.getPlayerStats();
         const container = document.createElement("div");
-        container.classList.add("bg-dark", "d-flex", "justify-content-center", "align-items-center", "col-12", "text-white", "text-center");
-
+        container.classList.add("bg-dark", "vh-75", "d-flex", "justify-content-center", "col-12", "text-white", "text-center");
+        container.append(this.generateLeftColumnOfGamePage(playerStats), this.generateRightColumnOfGamePage(playerStats));
+        return container;
+    }
+    generateLeftColumnOfGamePage(playerStats){
         const leftColumn = document.createElement("div");
         leftColumn.classList.add("col-5", "d-flex", "bg-secondary", "my-2", "ml-2", "mr-1");
+        leftColumn.append(this.generateScoreContainer(playerStats), this.generateHamburgerContainer());
+        return leftColumn;
+    }
+    generateRightColumnOfGamePage(playerStats){
+        const rightColumn = document.createElement("div");
+        rightColumn.classList.add("col-7", "my-2", "mr-2", "ml-1");
+        rightColumn.append(this.generatePlayerStatsContainer(playerStats), this.generateShowcaseContainer());
+        return rightColumn;
+    }
+    generateScoreContainer(playerStats){
         const scoreContainer = document.createElement("div");
         scoreContainer.classList.add("col-12");
         scoreContainer.innerHTML =
@@ -43,14 +56,16 @@ class Application{
                 <h3>${playerStats.hamburgerCount} Burgers</h3>
                 <h5>one click $${playerStats.wagePerClick}</h5>
             `;
-        // add a hamburger image later
-        const hamburgerIconContainer = document.createElement("div");
-        leftColumn.append(scoreContainer, hamburgerIconContainer);
-
-        const rightColumn = document.createElement("div");
-        rightColumn.classList.add("col-7", "bg-secondary", "my-2", "mr-2", "ml-1");
+        return scoreContainer;
+    }
+    generateHamburgerContainer(){
+        const hamburgerContainer = document.createElement("div");
+        hamburgerContainer.append();
+        return hamburgerContainer;
+    }
+    generatePlayerStatsContainer(playerStats){
         const playerStatsContainer = document.createElement("div");
-        playerStatsContainer.classList.add("col-12", "d-flex", "flex-wrap", "justify-content-around", "align-items-center", "py-2");
+        playerStatsContainer.classList.add("col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-around", "align-items-center", "py-2");
         playerStatsContainer.innerHTML =
             `
                 <div class="bg-dark col-5 h5 p-3 my-2">${playerStats.name}</div>
@@ -58,13 +73,26 @@ class Application{
                 <div class="bg-dark col-5 h5 p-3 my-2">${playerStats.daysGoneSinceBusinessStart} days</div>
                 <div class="bg-dark col-5 h5 p-3 my-2">$${playerStats.money}</div>
             `;
-        // add contents in showcase
-        const showcaseContainer = document.createElement("div");
-        rightColumn.append(playerStatsContainer, showcaseContainer);
-        console.log(playerStats);
-
-        container.append(leftColumn, rightColumn);
+        return playerStatsContainer;
+    }
+    generateShowcaseContainer(){
+        const items = this.#game.getItems();
+        const container = document.createElement("div");
+        container.classList.add("showcase", "my-2", "col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-center", "align-items-center");
+        for(const item of items){
+            container.append(this.generateItemContainer(item));
+        }
         return container;
+    }
+    generateItemContainer(item){
+        const itemContainer = document.createElement("div");
+        itemContainer.classList.add("col-12", "bg-dark", "my-2");
+        itemContainer.innerHTML =
+            `
+                <p>${item.getName()}</p>
+                <p>${item.getStockInUse()}</p>
+            `;
+        return itemContainer;
     }
 }
 
