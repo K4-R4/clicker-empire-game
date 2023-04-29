@@ -59,6 +59,12 @@ class Player{
     workForDay(){
         this.#wallet.deposit(this.getDailyWage());
     }
+    isAffordable(amount){
+        return amount <= this.#wallet.getMoney();
+    }
+    buyItem(amount){
+        this.#wallet.withdraw(amount);
+    }
 }
 
 export { Player };

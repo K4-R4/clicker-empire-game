@@ -6,8 +6,8 @@ class Ability extends Item{
         super(name, maxStock, price);
         this.#additionalWagePerClick = additionalWagePerClick;
     }
-    provideBenefit(player, amountToBuy){
-        player.addWagePerClick(this.#additionalWagePerClick * amountToBuy);
+    provideBenefit(player, quantity){
+        player.addWagePerClick(this.#additionalWagePerClick * quantity);
     }
 }
 
