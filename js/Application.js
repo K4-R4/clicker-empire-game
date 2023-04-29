@@ -32,8 +32,11 @@ class Application{
     generateGamePage(){
         const playerStats = this.#game.getPlayerStats();
         const container = document.createElement("div");
-        container.classList.add("bg-dark", "d-flex", "justify-content-center", "align-items-center", "col-12", "text-white", "text-center");
-
+        container.classList.add("bg-dark", "vh-75", "d-flex", "justify-content-center", "col-12", "text-white", "text-center");
+        container.append(this.generateLeftColumnOfGamePage(playerStats), this.generateRightColumnOfGamePage(playerStats));
+        return container;
+    }
+    generateLeftColumnOfGamePage(playerStats){
         const leftColumn = document.createElement("div");
         leftColumn.classList.add("col-5", "d-flex", "bg-secondary", "my-2", "ml-2", "mr-1");
         const scoreContainer = document.createElement("div");
@@ -46,11 +49,13 @@ class Application{
         // add a hamburger image later
         const hamburgerIconContainer = document.createElement("div");
         leftColumn.append(scoreContainer, hamburgerIconContainer);
-
+        return leftColumn;
+    }
+    generateRightColumnOfGamePage(playerStats){
         const rightColumn = document.createElement("div");
-        rightColumn.classList.add("col-7", "bg-secondary", "my-2", "mr-2", "ml-1");
+        rightColumn.classList.add("col-7", "my-2", "mr-2", "ml-1");
         const playerStatsContainer = document.createElement("div");
-        playerStatsContainer.classList.add("col-12", "d-flex", "flex-wrap", "justify-content-around", "align-items-center", "py-2");
+        playerStatsContainer.classList.add("col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-around", "align-items-center", "py-2");
         playerStatsContainer.innerHTML =
             `
                 <div class="bg-dark col-5 h5 p-3 my-2">${playerStats.name}</div>
@@ -59,11 +64,24 @@ class Application{
                 <div class="bg-dark col-5 h5 p-3 my-2">$${playerStats.money}</div>
             `;
         // add contents in showcase
-        const showcaseContainer = document.createElement("div");
+        const showcaseContainer = this.generateShowcaseContainer();
         rightColumn.append(playerStatsContainer, showcaseContainer);
-        console.log(playerStats);
-
-        container.append(leftColumn, rightColumn);
+        return rightColumn;
+    }
+    generateShowcaseContainer(){
+        const items = this.#game.getItems();
+        const container = document.createElement("div");
+        container.classList.add("showcase", "col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-center", "align-items-center");
+        for(const item of items){
+            const itemContainer = document.createElement("div");
+            itemContainer.classList.add("col-12", "bg-dark", "my-2");
+            itemContainer.innerHTML =
+                `
+                    <p>${item.getName()}</p>
+                    <p>${item.getStockInUse()}</p>
+                `;
+            container.append(itemContainer);
+        }
         return container;
     }
 }

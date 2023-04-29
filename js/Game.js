@@ -22,8 +22,11 @@ class Game{
             new RealEstate("Bullet-Speed Sky Railway", 10000000000000, 30000000000)
         ];
     }
+    getItems(){
+        return this.#items;
+    }
     getPlayerStats(){
-        return this.#player.getPlayerInformation();
+        return this.#player.getStats();
     }
     start(){
         setInterval(() => {

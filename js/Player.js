@@ -35,7 +35,7 @@ class Player{
     getDailyWage(){
         return this.#dailyWage;
     }
-    getPlayerInformation(){
+    getStats(){
         return {
             name: this.getName(),
             age: this.getAge(),
