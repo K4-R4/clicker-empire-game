@@ -1,40 +1,36 @@
 class Item{
     #name;
-    #maxAmount;
-    #amountInUse;
+    #maxStock;
+    #availableStock;
     #price;
-    constructor(name, maxAmount, price){
+    constructor(name, maxStock, price){
         this.#name = name;
-        this.#maxAmount = maxAmount;
-        this.#amountInUse = 0;
+        this.#maxStock = maxStock;
+        this.#availableStock = maxStock;
         this.#price = price;
     }
     getName(){
         return this.#name;
     }
-    getMaxStock(){
-        return this.#maxAmount;
-    }
-    getStockInUse(){
-        return this.#amountInUse;
-    }
-    addStockInUse(amount){
-        this.#amountInUse += amount;
+    getAvailableStock(){
+        return this.#availableStock;
     }
     getPrice(){
         return this.#price;
     }
-    buy(player, amount){
-        const availableStock = this.getMaxStock() - this.getStockInUse();
-        const amountToBuy = Math.min(Math.max(amount, 0), availableStock);
-        this.addStockInUse(amountToBuy);
-        this.provideBenefit(player, amountToBuy);
-        return amountToBuy;
+    setAvailableStock(quantity){
+        this.#availableStock = quantity;
     }
-    calculatePrice(amount){
-        return this.getPrice() * amount;
+    transact(quantity){
+        this.setAvailableStock(this.getAvailableStock() - quantity);
     }
-    provideBenefit(player, amount){
+    isStockAvailable(quantity){
+        return quantity >= this.getAvailableStock();
+    }
+    calculateTotalCost(quantity){
+        return this.getPrice() * quantity;
+    }
+    provideBenefit(player, quantity){
         throw new Error('Method "provideBenefit()" must be implemented.');
     }
 }

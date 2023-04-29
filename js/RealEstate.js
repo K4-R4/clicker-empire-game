@@ -6,8 +6,8 @@ class RealEstate extends Item{
         super(name, maxStock, price);
         this.#additionalDailyWage = additionalDailyWage;
     }
-    provideBenefit(player, amountToBuy){
-        player.addDailyWage(this.#additionalDailyWage * amountToBuy);
+    provideBenefit(player, quantity){
+        player.addDailyWage(this.#additionalDailyWage * quantity);
     }
 }
 

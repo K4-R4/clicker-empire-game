@@ -90,7 +90,7 @@ class Application{
         itemContainer.innerHTML =
             `
                 <p>${item.getName()}</p>
-                <p>${item.getStockInUse()}</p>
+                <p>${item.getAvailableStock()}</p>
             `;
         return itemContainer;
     }

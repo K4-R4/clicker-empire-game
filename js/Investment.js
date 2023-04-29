@@ -6,8 +6,8 @@ class Investment extends Item{
         super(name, maxStock, price);
         this.#interest = interest;
     }
-    provideBenefit(player, amountToBuy){
-        player.addDailyWage(super.getPrice() * amountToBuy * this.#interest);
+    provideBenefit(player, quantity){
+        player.addDailyWage(super.getPrice() * quantity * this.#interest);
     }
 }
 
