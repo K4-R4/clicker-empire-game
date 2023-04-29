@@ -16,6 +16,9 @@ class Application{
             this.#gamePage.append(this.generateGamePage());
             this.#game.start();
         });
+        document.addEventListener("gameUpdate", () => {
+            this.updateGamePage();
+        })
     }
     displayNone(ele){
         ele.classList.add("d-block");
@@ -28,6 +31,10 @@ class Application{
     initializeUserAccount(){
         const playerName = this.#loginForm.querySelector(`input[name="user-name"]`).value;
         return new Player(playerName);
+    }
+    updateGamePage(){
+        this.#gamePage.innerHTML = "";
+        this.#gamePage.append(this.generateGamePage());
     }
     generateGamePage(){
         const playerStats = this.#game.getPlayerStats();

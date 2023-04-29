@@ -26,6 +26,9 @@ class Player{
     getDaysGoneSinceBusinessStart(){
         return this.#daysGoneSinceBusinessStart;
     }
+    setDaysGoneSinceBusinessStart(daysGoneSinceBusinessStart){
+        this.#daysGoneSinceBusinessStart = daysGoneSinceBusinessStart;
+    }
     getHamburgerCount(){
         return this.#hamburgerCount;
     }
@@ -58,6 +61,7 @@ class Player{
     }
     workForDay(){
         this.#wallet.deposit(this.getDailyWage());
+        this.setDaysGoneSinceBusinessStart(this.getDaysGoneSinceBusinessStart() + 1);
     }
     isAffordable(amount){
         return amount <= this.#wallet.getMoney();

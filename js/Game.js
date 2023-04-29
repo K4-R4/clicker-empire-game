@@ -36,7 +36,7 @@ class Game{
     start(){
         setInterval(() => {
             this.#player.workForDay();
-            dispatchEvent(this.#gameUpdateEvent);
+            document.dispatchEvent(this.#gameUpdateEvent);
         }, this.getUpdatePerMillisecond());
     }
     isValidOrder(item, quantity){
