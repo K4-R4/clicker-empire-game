@@ -15,11 +15,14 @@ class Application{
             this.displayBlock(this.#initialPage);
             this.displayNone(this.#gamePage);
             this.#gamePage.append(this.generateGamePage());
-            this.#game.update();
+            this.#game.startGameLoop();
         });
-        document.addEventListener("gameUpdate", () => {
-            this.updateGamePage();
-        })
+        document.addEventListener("playerStatsUpdated", () => {
+            this.updatePlayerStats()
+        });
+        document.addEventListener("transactionMade", () => {
+            this.updateShop();
+        });
     }
     getHamburgerImage(){
         return this.#hamburgerImage;
@@ -36,31 +39,30 @@ class Application{
         const playerName = this.#loginForm.querySelector(`input[name="user-name"]`).value;
         return new Player(playerName);
     }
-    updateGamePage(){
-        this.#gamePage.innerHTML = "";
-        this.#gamePage.append(this.generateGamePage());
-    }
     generateGamePage(){
-        const playerStats = this.#game.getPlayerStats();
         const container = document.createElement("div");
         container.classList.add("bg-dark", "vh-75", "d-flex", "justify-content-center", "col-12", "text-white", "text-center");
-        container.append(this.generateLeftColumnOfGamePage(playerStats), this.generateRightColumnOfGamePage(playerStats));
+        container.append(this.generateLeftColumnOfGamePage(), this.generateRightColumnOfGamePage());
         return container;
     }
-    generateLeftColumnOfGamePage(playerStats){
+    generateLeftColumnOfGamePage(){
         const leftColumn = document.createElement("div");
+        leftColumn.setAttribute("id", "left-column");
         leftColumn.classList.add("col-5", "flex-column", "my-2", "ml-2", "mr-1");
-        leftColumn.append(this.generateScoreContainer(playerStats), this.generateHamburgerContainer());
+        leftColumn.append(this.generateScoreContainer(), this.generateHamburgerContainer());
         return leftColumn;
     }
-    generateRightColumnOfGamePage(playerStats){
+    generateRightColumnOfGamePage(){
         const rightColumn = document.createElement("div");
+        rightColumn.setAttribute("id", "right-column");
         rightColumn.classList.add("col-7", "my-2", "mr-2", "ml-1");
-        rightColumn.append(this.generatePlayerStatsContainer(playerStats), this.generateShowcaseContainer());
+        rightColumn.append(this.generatePlayerStatsContainer(), this.generateShopContainer());
         return rightColumn;
     }
-    generateScoreContainer(playerStats){
+    generateScoreContainer(){
+        const playerStats = this.#game.getPlayerStats();
         const scoreContainer = document.createElement("div");
+        scoreContainer.setAttribute("id", "score-container");
         scoreContainer.classList.add("col-12", "bg-secondary", "py-3", "flex-grow-0");
         scoreContainer.innerHTML =
             `
@@ -82,8 +84,10 @@ class Application{
         });
         return hamburgerContainer;
     }
-    generatePlayerStatsContainer(playerStats){
+    generatePlayerStatsContainer(){
+        const playerStats = this.#game.getPlayerStats();
         const playerStatsContainer = document.createElement("div");
+        playerStatsContainer.setAttribute("id", "player-stats-container");
         playerStatsContainer.classList.add("col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-around", "align-items-center", "py-2");
         playerStatsContainer.innerHTML =
             `
@@ -94,9 +98,10 @@ class Application{
             `;
         return playerStatsContainer;
     }
-    generateShowcaseContainer(){
+    generateShopContainer(){
         const items = this.#game.getItems();
         const container = document.createElement("div");
+        container.setAttribute("id", "shop-container");
         container.classList.add("showcase", "my-2", "col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-center", "align-items-center");
         for(const item of items){
             container.append(this.generateItemContainer(item));
@@ -127,6 +132,21 @@ class Application{
             `
         itemContainer.append(thumbnail, description, stock);
         return itemContainer;
+    }
+    updatePlayerStats(){
+        const leftColumn = this.#gamePage.querySelector("#left-column");
+        const rightColumn = this.#gamePage.querySelector("#right-column");
+
+        document.getElementById("score-container").remove();
+        leftColumn.prepend(this.generateScoreContainer());
+        document.getElementById("player-stats-container").remove();
+        rightColumn.prepend(this.generatePlayerStatsContainer());
+    }
+    updateShop(){
+        const rightColumn = this.#gamePage.querySelector("#right-column");
+
+        document.getElementById("shop-container").remove();
+        rightColumn.append(this.generateShopContainer());
     }
 }
 
