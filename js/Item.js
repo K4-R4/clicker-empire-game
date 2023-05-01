@@ -3,11 +3,13 @@ class Item{
     #maxStock;
     #availableStock;
     #price;
-    constructor(name, maxStock, price){
+    #imagePath;
+    constructor(name, maxStock, price, imagePath){
         this.#name = name;
         this.#maxStock = maxStock;
         this.#availableStock = maxStock;
         this.#price = price;
+        this.#imagePath = imagePath;
     }
     getName(){
         return this.#name;
@@ -17,6 +19,9 @@ class Item{
     }
     getPrice(){
         return this.#price;
+    }
+    getImagePath(){
+        return this.#imagePath;
     }
     setAvailableStock(quantity){
         this.#availableStock = quantity;

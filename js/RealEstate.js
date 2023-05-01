@@ -2,8 +2,8 @@ import { Item } from "./Item.js";
 
 class RealEstate extends Item{
     #additionalDailyWage;
-    constructor(name, maxStock, price, additionalDailyWage){
-        super(name, maxStock, price);
+    constructor(name, maxStock, price, imagePath, additionalDailyWage){
+        super(name, maxStock, price, imagePath);
         this.#additionalDailyWage = additionalDailyWage;
     }
     provideBenefit(player, quantity){

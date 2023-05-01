@@ -10,17 +10,17 @@ class Game{
     constructor(player){
         this.#player = player;
         this.#items = [
-            new Ability("Flip Machine", 500, 15000, 25),
-            new Investment("ETF Stock", Infinity, 300000, 0.1),
-            new Investment("ETF Bonds", Infinity, 300000, 0.07),
-            new RealEstate("Lemonade Stand", 1000, 30000, 30),
-            new RealEstate("Ice Cream Truck", 500, 100000, 120),
-            new RealEstate("House", 100, 2000000, 32000),
-            new RealEstate("Town House", 100, 4000000, 64000),
-            new RealEstate("Mansion", 20, 25000000, 500000),
-            new RealEstate("Industrial Space", 10, 1000000000, 2200000),
-            new RealEstate("Hotel Skyscraper", 5, 10000000000, 25000000),
-            new RealEstate("Bullet-Speed Sky Railway", 10000000000000, 30000000000)
+            new Ability("Flip Machine", 500, 15000, "../img/flip-machine.png", 25),
+            new Investment("ETF Stock", Infinity, 300000, "../img/stock.png", 0.1),
+            new Investment("ETF Bonds", Infinity, 300000, "../img/stock.png", 0.07),
+            new RealEstate("Lemonade Stand", 1000, 30000, "../img/lemonade.png", 30),
+            new RealEstate("Ice Cream Truck", 500, 100000, "../img/ice-cream-truck.png", 120),
+            new RealEstate("House", 100, 2000000, "../img/house.png", 32000),
+            new RealEstate("Town House", 100, 4000000, "../img/townhouse.png", 64000),
+            new RealEstate("Mansion", 20, 25000000, "../img/mansion.png", 500000),
+            new RealEstate("Industrial Space", 10, 1000000000, "../img/industrial-space.png", 2200000),
+            new RealEstate("Hotel Skyscraper", 5, 10000000000, "../img/hotel.png", 25000000),
+            new RealEstate("Bullet-Speed Sky Railway", 1, 10000000000000, "../img/bullet-train.png", 30000000000)
         ];
         this.#gameUpdateEvent = new CustomEvent("gameUpdate");
     }
