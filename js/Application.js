@@ -37,6 +37,10 @@ class Application{
     }
     initializeUserAccount(){
         const playerName = this.#loginForm.querySelector(`input[name="user-name"]`).value;
+        if(playerName === ""){
+            alert("Please put your name");
+            return;
+        }
         return new Player(playerName);
     }
     generateGamePage(){
@@ -169,7 +173,21 @@ class Application{
             rightColumn.append(this.generateShopContainer());
         });
         nextButton.addEventListener("click", () => {
+            const quantity = document.getElementById("number-of-orders").value;
+            const amount = item.calculateTotalCost(quantity);
+            if(!item.isStockAvailable(quantity)){
+                alert("Invalid number");
+                return;
+            }
+            if(!this.#game.getPlayer().isAffordable(amount)){
+                alert("You don't have enough money");
+                return;
+            }
+            this.#game.executeOrder(item, quantity);
 
+            const rightColumn = document.getElementById("right-column");
+            document.getElementById("transaction-container").remove();
+            rightColumn.append(this.generateShopContainer());
         });
         transactionContainer.append(buttons);
         return transactionContainer;

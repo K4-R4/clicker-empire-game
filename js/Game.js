@@ -7,7 +7,6 @@ class Game{
     #player;
     #items;
     #playerStatsUpdatedEvent;
-    #transactionMadeEvent;
     constructor(player){
         this.#player = player;
         this.#items = [
@@ -24,10 +23,12 @@ class Game{
             new RealEstate("Bullet-Speed Sky Railway", 1, 10000000000000, "../img/bullet-train.png", 30000000000)
         ];
         this.#playerStatsUpdatedEvent = new CustomEvent("playerStatsUpdated");
-        this.#transactionMadeEvent = new CustomEvent("transactionMade")
     }
     getUpdatePerMillisecond(){
         return this.#updatePerMillisecond;
+    }
+    getPlayer(){
+        return this.#player;
     }
     getItems(){
         return this.#items;
@@ -45,16 +46,12 @@ class Game{
         this.#player.click();
         document.dispatchEvent(this.#playerStatsUpdatedEvent);
     }
-    isValidOrder(item, quantity){
-        if(!item.isStockAvailable(quantity)) return false;
-        const amount = item.calculateTotalCost(quantity);
-        return this.#player.isAffordable(amount);
-    }
     executeOrder(item, quantity){
         const amount = item.calculateTotalCost(quantity);
         this.#player.buyItem(amount);
         item.transact(quantity);
         item.provideBenefit(this.#player, quantity);
+        dispatchEvent(this.#playerStatsUpdatedEvent);
     }
 }
 
