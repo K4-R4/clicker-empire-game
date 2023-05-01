@@ -2,12 +2,16 @@
     height: 75vh;
 }
 
-img.hamburger:hover{
+.scaleOnHover:hover{
     transform: scale(1.01);
 }
 
-img.hamburger:active{
+.scaleOnClick:active{
     transform: scale(1.02);
+}
+
+img.thumbnail{
+    width: 100%;
 }
 
 .showcase{

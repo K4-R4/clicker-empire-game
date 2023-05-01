@@ -14,6 +14,9 @@ class Item{
     getName(){
         return this.#name;
     }
+    getMaxStock(){
+        return this.#maxStock;
+    }
     getAvailableStock(){
         return this.#availableStock;
     }

@@ -74,7 +74,7 @@ class Application{
         hamburgerContainer.classList.add("col", "h-75", "d-flex", "justify-content-center", "align-items-center", "flex-grow-1");
         hamburgerContainer.innerHTML =
             `
-                <img alt="Hamburger" src="${this.getHamburgerImage()}" class="hamburger w-100">
+                <img alt="Hamburger" src="${this.getHamburgerImage()}" class="scaleOnHover scaleOnClick w-100">
             `;
         hamburgerContainer.append();
         return hamburgerContainer;
@@ -102,12 +102,27 @@ class Application{
     }
     generateItemContainer(item){
         const itemContainer = document.createElement("div");
-        itemContainer.classList.add("col-12", "bg-dark", "my-2");
-        itemContainer.innerHTML =
+        const thumbnail = document.createElement("div");
+        const description = document.createElement("div");
+        const stock = document.createElement("div");
+        itemContainer.classList.add("col-12", "d-flex", "flex-row", "bg-dark", "py-4", "my-1", "scaleOnHover", "scaleOnClick");
+        thumbnail.classList.add("col-4");
+        description.classList.add("col-7", "d-flex", "flex-column", "justify-content-center", "align-items-center", "text-start");
+        stock.classList.add("col-1", "d-flex", "justify-content-center", "align-items-center");
+        thumbnail.innerHTML =
             `
-                <p>${item.getName()}</p>
-                <p>${item.getAvailableStock()}</p>
+                <img alt="thumbnail" src="${item.getImagePath()}" class="thumbnail">
             `;
+        description.innerHTML =
+            `
+                <h3>${item.getName()}</h3>
+                <h4>$${item.getPrice()}</h4>
+            `;
+        stock.innerHTML =
+            `
+                <h3>${item.getMaxStock() - item.getAvailableStock()}</h3>
+            `
+        itemContainer.append(thumbnail, description, stock);
         return itemContainer;
     }
 }
