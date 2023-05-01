@@ -6,7 +6,8 @@ class Game{
     #updatePerMillisecond = 1000;
     #player;
     #items;
-    #gameUpdateEvent;
+    #playerStatsUpdatedEvent;
+    #transactionMadeEvent;
     constructor(player){
         this.#player = player;
         this.#items = [
@@ -22,7 +23,8 @@ class Game{
             new RealEstate("Hotel Skyscraper", 5, 10000000000, "../img/hotel.png", 25000000),
             new RealEstate("Bullet-Speed Sky Railway", 1, 10000000000000, "../img/bullet-train.png", 30000000000)
         ];
-        this.#gameUpdateEvent = new CustomEvent("gameUpdate");
+        this.#playerStatsUpdatedEvent = new CustomEvent("playerStatsUpdated");
+        this.#transactionMadeEvent = new CustomEvent("transactionMade")
     }
     getUpdatePerMillisecond(){
         return this.#updatePerMillisecond;
@@ -33,15 +35,15 @@ class Game{
     getPlayerStats(){
         return this.#player.getStats();
     }
-    update(){
+    startGameLoop(){
         setInterval(() => {
             this.#player.workForDay();
-            document.dispatchEvent(this.#gameUpdateEvent);
+            document.dispatchEvent(this.#playerStatsUpdatedEvent);
         }, this.getUpdatePerMillisecond());
     }
     click(){
         this.#player.click();
-        document.dispatchEvent(this.#gameUpdateEvent);
+        document.dispatchEvent(this.#playerStatsUpdatedEvent);
     }
     isValidOrder(item, quantity){
         if(!item.isStockAvailable(quantity)) return false;
