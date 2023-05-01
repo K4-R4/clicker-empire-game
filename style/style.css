@@ -2,6 +2,14 @@
     height: 75vh;
 }
 
+img.hamburger:hover{
+    transform: scale(1.01);
+}
+
+img.hamburger:active{
+    transform: scale(1.02);
+}
+
 .showcase{
     height: 50vh;
     overflow-y: scroll;
