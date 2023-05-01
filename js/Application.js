@@ -88,13 +88,13 @@ class Application{
         const playerStats = this.#game.getPlayerStats();
         const playerStatsContainer = document.createElement("div");
         playerStatsContainer.setAttribute("id", "player-stats-container");
-        playerStatsContainer.classList.add("col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-around", "align-items-center", "py-2");
+        playerStatsContainer.classList.add("player-stats", "col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-around", "align-items-center", "py-2");
         playerStatsContainer.innerHTML =
             `
-                <div class="bg-dark col-5 h5 p-3 my-2">${playerStats.name}</div>
-                <div class="bg-dark col-5 h5 p-3 my-2">${playerStats.age} years old</div>
-                <div class="bg-dark col-5 h5 p-3 my-2">${playerStats.daysGoneSinceBusinessStart} days</div>
-                <div class="bg-dark col-5 h5 p-3 my-2">$${playerStats.money}</div>
+                <div class="bg-dark col-5 h5 p-2 my-1">${playerStats.name}</div>
+                <div class="bg-dark col-5 h5 p-2 my-1">${playerStats.age} years old</div>
+                <div class="bg-dark col-5 h5 p-2 my-1">${playerStats.daysGoneSinceBusinessStart} days</div>
+                <div class="bg-dark col-5 h5 p-2 my-1">$${playerStats.money}</div>
             `;
         return playerStatsContainer;
     }
@@ -102,7 +102,7 @@ class Application{
         const items = this.#game.getItems();
         const container = document.createElement("div");
         container.setAttribute("id", "shop-container");
-        container.classList.add("showcase", "my-2", "col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-center", "align-items-center");
+        container.classList.add("shop-page", "my-2", "py-2", "col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-center", "align-items-center");
         for(const item of items){
             container.append(this.generateItemContainer(item));
         }
@@ -113,7 +113,7 @@ class Application{
         const thumbnail = document.createElement("div");
         const description = document.createElement("div");
         const stock = document.createElement("div");
-        itemContainer.classList.add("col-12", "d-flex", "flex-row", "bg-dark", "py-4", "my-1");
+        itemContainer.classList.add("col-12", "d-flex", "flex-row", "bg-dark", "py-4", "my-2");
         thumbnail.classList.add("col-4");
         description.classList.add("col-7", "d-flex", "flex-column", "justify-content-center", "align-items-center", "text-start");
         stock.classList.add("col-1", "d-flex", "justify-content-center", "align-items-center");
@@ -131,7 +131,48 @@ class Application{
                 <h3>${item.getMaxStock() - item.getAvailableStock()}</h3>
             `
         itemContainer.append(thumbnail, description, stock);
+
+        itemContainer.addEventListener("click", () => {
+            document.getElementById("shop-container").remove();
+            document.getElementById("right-column").append(this.generateTransactionContainer(item));
+        });
         return itemContainer;
+    }
+    generateTransactionContainer(item){
+        const transactionContainer = document.createElement("div");
+        transactionContainer.setAttribute("id", "transaction-container");
+        transactionContainer.classList.add("transaction-page", "my-2", "py-2", "col-12", "d-flex", "flex-row", "flex-wrap", "bg-secondary", "py-4", "my-1");
+        transactionContainer.innerHTML =
+            `
+                <div class="col-8">
+                    <h4>${item.getName()}</h4>
+                    <p>
+                        Max Purchase: ${item.getMaxStock()}</br>
+                        Price: $${item.getPrice()}</br>
+                    </p>
+                </div>
+                <div class="col-4">
+                    <img alt="thumbnail" src="${item.getImagePath()}" class="thumbnail">
+                </div>
+                <div class="col-12 form-group">
+                    <label for="number-of-orders" class="col-12 col-form-label text-left">How many would you like to purchase?</label>
+                    <input type="number" name="number-of-orders" value="0" id="number-of-orders" class="col-12 form-control text-right">
+                </div>
+            `;
+
+        const buttons = this.createButtons("Go Back", "Purchase");
+        const backButton = buttons.querySelector(".back-button");
+        const nextButton = buttons.querySelector(".next-button");
+        backButton.addEventListener("click", () => {
+            const rightColumn = document.getElementById("right-column");
+            document.getElementById("transaction-container").remove();
+            rightColumn.append(this.generateShopContainer());
+        });
+        nextButton.addEventListener("click", () => {
+
+        });
+        transactionContainer.append(buttons);
+        return transactionContainer;
     }
     updatePlayerStats(){
         const leftColumn = this.#gamePage.querySelector("#left-column");
@@ -147,6 +188,20 @@ class Application{
 
         document.getElementById("shop-container").remove();
         rightColumn.append(this.generateShopContainer());
+    }
+    createButtons(leftButtonName, rightButtonName){
+        const buttons = document.createElement("div");
+        const leftButton = document.createElement("button");
+        const rightButton = document.createElement("button");
+
+        buttons.classList.add("col-12", "d-flex", "justify-content-around", "align-items-center");
+        leftButton.classList.add("btn", "btn-light", "col-5", "back-button");
+        rightButton.classList.add("btn", "btn-primary", "col-5", "next-button");
+
+        leftButton.innerHTML = leftButtonName;
+        rightButton.innerHTML = rightButtonName;
+        buttons.append(leftButton, rightButton);
+        return buttons;
     }
 }
 
