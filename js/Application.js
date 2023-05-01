@@ -15,7 +15,7 @@ class Application{
             this.displayBlock(this.#initialPage);
             this.displayNone(this.#gamePage);
             this.#gamePage.append(this.generateGamePage());
-            this.#game.start();
+            this.#game.update();
         });
         document.addEventListener("gameUpdate", () => {
             this.updateGamePage();
@@ -74,9 +74,12 @@ class Application{
         hamburgerContainer.classList.add("col", "h-75", "d-flex", "justify-content-center", "align-items-center", "flex-grow-1");
         hamburgerContainer.innerHTML =
             `
-                <img alt="Hamburger" src="${this.getHamburgerImage()}" class="scaleOnHover scaleOnClick w-100">
+                <img alt="Hamburger" src="${this.getHamburgerImage()}" class="hamburger scaleOnClick w-50">
             `;
         hamburgerContainer.append();
+        hamburgerContainer.addEventListener("click", () => {
+            this.#game.click();
+        });
         return hamburgerContainer;
     }
     generatePlayerStatsContainer(playerStats){
@@ -105,7 +108,7 @@ class Application{
         const thumbnail = document.createElement("div");
         const description = document.createElement("div");
         const stock = document.createElement("div");
-        itemContainer.classList.add("col-12", "d-flex", "flex-row", "bg-dark", "py-4", "my-1", "scaleOnHover", "scaleOnClick");
+        itemContainer.classList.add("col-12", "d-flex", "flex-row", "bg-dark", "py-4", "my-1");
         thumbnail.classList.add("col-4");
         description.classList.add("col-7", "d-flex", "flex-column", "justify-content-center", "align-items-center", "text-start");
         stock.classList.add("col-1", "d-flex", "justify-content-center", "align-items-center");
