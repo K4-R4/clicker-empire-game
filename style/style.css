@@ -2,16 +2,16 @@
     height: 75vh;
 }
 
-.scaleOnHover:hover{
+.hamburger:hover{
     transform: scale(1.01);
 }
 
-.scaleOnClick:active{
-    transform: scale(1.02);
+.hamburger:active{
+    transform: scale(1.03);
 }
 
 img.thumbnail{
-    width: 100%;
+    width: 70%;
 }
 
 .showcase{

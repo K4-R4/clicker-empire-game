@@ -33,11 +33,15 @@ class Game{
     getPlayerStats(){
         return this.#player.getStats();
     }
-    start(){
+    update(){
         setInterval(() => {
             this.#player.workForDay();
             document.dispatchEvent(this.#gameUpdateEvent);
         }, this.getUpdatePerMillisecond());
+    }
+    click(){
+        this.#player.click();
+        document.dispatchEvent(this.#gameUpdateEvent);
     }
     isValidOrder(item, quantity){
         if(!item.isStockAvailable(quantity)) return false;
