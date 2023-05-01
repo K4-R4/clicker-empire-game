@@ -20,9 +20,6 @@ class Application{
         document.addEventListener("playerStatsUpdated", () => {
             this.updatePlayerStats()
         });
-        document.addEventListener("transactionMade", () => {
-            this.updateShop();
-        });
     }
     getHamburgerImage(){
         return this.#hamburgerImage;
@@ -200,12 +197,6 @@ class Application{
         leftColumn.prepend(this.generateScoreContainer());
         document.getElementById("player-stats-container").remove();
         rightColumn.prepend(this.generatePlayerStatsContainer());
-    }
-    updateShop(){
-        const rightColumn = this.#gamePage.querySelector("#right-column");
-
-        document.getElementById("shop-container").remove();
-        rightColumn.append(this.generateShopContainer());
     }
     createButtons(leftButtonName, rightButtonName){
         const buttons = document.createElement("div");
