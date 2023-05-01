@@ -6,6 +6,7 @@ class Application{
     #initialPage = document.getElementById("initial-page");
     #loginForm = this.#initialPage.querySelector("#login-form");
     #gamePage = document.getElementById("game-page");
+    #hamburgerImage = "../img/hamburger.png";
     constructor() {
         this.#loginForm.addEventListener("submit", (event) => {
             const player = this.initializeUserAccount();
@@ -19,6 +20,9 @@ class Application{
         document.addEventListener("gameUpdate", () => {
             this.updateGamePage();
         })
+    }
+    getHamburgerImage(){
+        return this.#hamburgerImage;
     }
     displayNone(ele){
         ele.classList.add("d-block");
@@ -45,7 +49,7 @@ class Application{
     }
     generateLeftColumnOfGamePage(playerStats){
         const leftColumn = document.createElement("div");
-        leftColumn.classList.add("col-5", "d-flex", "bg-secondary", "my-2", "ml-2", "mr-1");
+        leftColumn.classList.add("col-5", "flex-column", "my-2", "ml-2", "mr-1");
         leftColumn.append(this.generateScoreContainer(playerStats), this.generateHamburgerContainer());
         return leftColumn;
     }
@@ -57,7 +61,7 @@ class Application{
     }
     generateScoreContainer(playerStats){
         const scoreContainer = document.createElement("div");
-        scoreContainer.classList.add("col-12");
+        scoreContainer.classList.add("col-12", "bg-secondary", "py-3", "flex-grow-0");
         scoreContainer.innerHTML =
             `
                 <h3>${playerStats.hamburgerCount} Burgers</h3>
@@ -67,6 +71,11 @@ class Application{
     }
     generateHamburgerContainer(){
         const hamburgerContainer = document.createElement("div");
+        hamburgerContainer.classList.add("col", "h-75", "d-flex", "justify-content-center", "align-items-center", "flex-grow-1");
+        hamburgerContainer.innerHTML =
+            `
+                <img alt="Hamburger" src="${this.getHamburgerImage()}" class="hamburger w-100">
+            `;
         hamburgerContainer.append();
         return hamburgerContainer;
     }
