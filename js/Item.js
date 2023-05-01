@@ -33,7 +33,7 @@ class Item{
         this.setAvailableStock(this.getAvailableStock() - quantity);
     }
     isStockAvailable(quantity){
-        return quantity >= this.getAvailableStock();
+        return quantity > 0 && quantity <= this.getAvailableStock();
     }
     calculateTotalCost(quantity){
         return this.getPrice() * quantity;

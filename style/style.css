@@ -14,7 +14,15 @@ img.thumbnail{
     width: 70%;
 }
 
-.showcase{
-    height: 50vh;
+.player-stats{
+    height: 20%;
+}
+
+.shop-page{
+    height: 70%;
     overflow-y: scroll;
+}
+
+.transaction-page{
+    height: 70%;
 }
