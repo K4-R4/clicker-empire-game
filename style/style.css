@@ -1,13 +1,36 @@
-.vh-75{
-    height: 75vh;
+:root{
+    --font-size-large: 1.5rem;
+    --font-size-medium: 1rem;
+    --font-size-small: 0.5rem;
+}
+
+.font-size-large{
+    font-size: var(--font-size-large);
+}
+
+.font-size-medium{
+    font-size: var(--font-size-medium);
+}
+
+.font-size-small{
+    font-size: var(--font-size-small);
+}
+
+.vh-85{
+    height: 85vh;
 }
 
 .hamburger:hover{
+    cursor: pointer;
     transform: scale(1.01);
 }
 
 .hamburger:active{
     transform: scale(1.03);
+}
+
+.item:hover{
+    cursor: pointer;
 }
 
 img.thumbnail{
