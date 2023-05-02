@@ -11,37 +11,23 @@ const config = {
     hamburgerImage : "../img/hamburger.png"
 }
 config.initialPage.querySelector("#register").addEventListener("click", (event) => {
-    const player = initializeUserAccount();
-    config.game = new Game(player, [
-        new Ability("../img/flip-machine.png", 500, "Flip Machine", 15_000, 25),
-        new Investment("../img/stock.png", Infinity, "ETF Stock", 300_000, 0.1),
-        new Investment("../img/stock.png", Infinity, "ETF Bonds", 300_000, 0.07),
-        new RealEstate("../img/lemonade.png", 1_000, "Lemonade Stand", 30_000, 30),
-        new RealEstate("../img/ice-cream-truck.png", 500, "Ice Cream Truck", 100_000, 120),
-        new RealEstate("../img/house.png", 100, "House", 2_000_000, 32_000),
-        new RealEstate("../img/townhouse.png", 100, "Town House", 4_000_000, 64_000),
-        new RealEstate("../img/mansion.png", 20, "Mansion", 25_000_000, 500_000),
-        new RealEstate("../img/industrial-space.png", 10, "Industrial Space", 1_000_000_000, 2_200_000),
-        new RealEstate("../img/hotel.png", 5, "Hotel Skyscraper", 10_000_000_000, 25_000_000),
-        new RealEstate("../img/bullet-train.png", 1, "Bullet-Speed Sky Railway", 10_000_000_000_000, 30_000_000_000)
-    ]);
-    config.game.startGameLoop();
     event.preventDefault();
+    const player = initializeUserAccount();
+    if(player === null) return;
+    initializeGame(player);
+});
+
+config.initialPage.querySelector("#login").addEventListener("click", (event) => {
+    event.preventDefault();
+    const player = initializeUserAccount();
+    if(player === null) return;
+    config.game = loadDataInLocalStorage(player.getName());
+    if(config.game === null) return;
+    config.game.startGameLoop();
     displayBlock(config.initialPage);
     displayNone(config.gamePage);
     config.gamePage.append(generateGamePage());
 });
-
-config.initialPage.querySelector("#login").addEventListener("click", (event) => {
-    const player = initializeUserAccount();
-    config.game = loadDataInLocalStorage(player.getName());
-    if(config.game === null) return;
-    config.game.startGameLoop();
-    event.preventDefault();
-    displayBlock(config.initialPage);
-    displayNone(config.gamePage);
-    config.gamePage.append(generateGamePage());
-})
 document.addEventListener("playerStatsUpdated", () => {
     updatePlayerStats();
 });
@@ -57,9 +43,29 @@ function initializeUserAccount(){
     const playerName = config.initialPage.querySelector("#login-form").querySelector(`input[name="user-name"]`).value;
     if(playerName === ""){
         alert("Please put your name");
-        return;
+        return null;
     }
     return new Player(20, 0, 0, 0, 50000, playerName, 25);
+}
+function initializeGame(player){
+    config.game = new Game(player, [
+        new Ability(500, "../img/flip-machine.png", 500, "Flip Machine", 15_000, 25),
+        new Investment(Infinity, "../img/stock.png", Infinity, "ETF Stock", 300_000, 0.1),
+        new Investment(Infinity, "../img/stock.png", Infinity, "ETF Bonds", 300_000, 0.07),
+        new RealEstate(1_000, "../img/lemonade.png", 1_000, "Lemonade Stand", 30_000, 30),
+        new RealEstate(500, "../img/ice-cream-truck.png", 500, "Ice Cream Truck", 100_000, 120),
+        new RealEstate(100, "../img/house.png", 100, "House", 2_000_000, 32_000),
+        new RealEstate(100, "../img/townhouse.png", 100, "Town House", 4_000_000, 64_000),
+        new RealEstate(20, "../img/mansion.png", 20, "Mansion", 25_000_000, 500_000),
+        new RealEstate(10, "../img/industrial-space.png", 10, "Industrial Space", 1_000_000_000, 2_200_000),
+        new RealEstate(5, "../img/hotel.png", 5, "Hotel Skyscraper", 10_000_000_000, 25_000_000),
+        new RealEstate(1, "../img/bullet-train.png", 1, "Bullet-Speed Sky Railway", 10_000_000_000_000, 30_000_000_000)
+    ]);
+    displayBlock(config.initialPage);
+    displayNone(config.gamePage);
+    config.game.startGameLoop();
+    config.gamePage.innerHTML = "";
+    config.gamePage.append(generateGamePage());
 }
 function generateGamePage(){
     const container = document.createElement("div");
@@ -78,7 +84,7 @@ function generateRightColumnOfGamePage(){
     const rightColumn = document.createElement("div");
     rightColumn.setAttribute("id", "right-column");
     rightColumn.classList.add("col-7", "my-2", "mr-2", "ml-1");
-    rightColumn.append(generatePlayerStatsContainer(), generateShopContainer());
+    rightColumn.append(generateMainUiContainer(), generateSubUiContainer());
     return rightColumn;
 }
 function generateScoreContainer(){
@@ -105,6 +111,43 @@ function generateHamburgerContainer(){
         config.game.click();
     });
     return hamburgerContainer;
+}
+function generateMainUiContainer(){
+    const mainUiContainer = document.createElement("div");
+    mainUiContainer.setAttribute("id", "main-ui-container");
+    mainUiContainer.classList.add("col-12", "main-ui");
+    mainUiContainer.append(generatePlayerStatsContainer(), generateShopContainer());
+    return mainUiContainer;
+}
+
+function generateSubUiContainer(){
+    const subUiContainer = document.createElement("div");
+    subUiContainer.setAttribute("id", "sub-ui-container");
+    subUiContainer.classList.add("col-12", "d-flex", "justify-content-end", "align-items-center", "sub-ui", "mt-2");
+    subUiContainer.innerHTML =
+        `
+            <i id="reset-button" class="fa-solid fa-rotate-right fa-2x icon"></i>
+            <i id="save-button" class="fa-regular fa-floppy-disk fa-2x icon"></i> 
+        `;
+
+    const resetButton = subUiContainer.querySelector("#reset-button");
+    const saveButton = subUiContainer.querySelector("#save-button")
+    resetButton.addEventListener("click", () => {
+        if(!confirm("Are you sure you want to reset all data?")) return;
+        const playerName = config.game.player.getName();
+        const player = new Player(20, 0, 0, 0, 50000, playerName, 25);
+        config.game.stopGameLoop();
+        initializeGame(player);
+    });
+    saveButton.addEventListener("click", () => {
+        alert("Saved your data. Please put the same name when you login");
+        saveDataInLocalStorage();
+        config.gamePage.innerHTML = "";
+        config.game.stopGameLoop();
+        displayNone(config.initialPage);
+        displayBlock(config.gamePage);
+    });
+    return subUiContainer;
 }
 function generatePlayerStatsContainer(){
     const playerStats = config.game.getPlayerStats();
@@ -156,7 +199,7 @@ function generateItemContainer(item){
 
     itemContainer.addEventListener("click", () => {
         document.getElementById("shop-container").remove();
-        document.getElementById("right-column").append(generateTransactionContainer(item));
+        document.getElementById("main-ui-container").append(generateTransactionContainer(item));
     });
     return itemContainer;
 }
@@ -188,7 +231,7 @@ function generateTransactionContainer(item){
     backButton.addEventListener("click", () => {
         const rightColumn = document.getElementById("right-column");
         document.getElementById("transaction-container").remove();
-        rightColumn.append(generateShopContainer());
+        rightColumn.querySelector("#main-ui-container").append(generateShopContainer());
     });
     nextButton.addEventListener("click", () => {
         const quantity = document.getElementById("number-of-orders").value;
@@ -205,7 +248,7 @@ function generateTransactionContainer(item){
 
         const rightColumn = document.getElementById("right-column");
         document.getElementById("transaction-container").remove();
-        rightColumn.append(generateShopContainer());
+        rightColumn.querySelector("#main-ui-container").append(generateShopContainer());
     });
     transactionContainer.append(buttons);
     return transactionContainer;
@@ -217,7 +260,7 @@ function updatePlayerStats(){
     document.getElementById("score-container").remove();
     leftColumn.prepend(generateScoreContainer());
     document.getElementById("player-stats-container").remove();
-    rightColumn.prepend(generatePlayerStatsContainer());
+    rightColumn.querySelector("#main-ui-container").prepend(generatePlayerStatsContainer());
 }
 function createButtons(leftButtonName, rightButtonName){
     const buttons = document.createElement("div");
@@ -263,6 +306,7 @@ function loadDataInLocalStorage(playerName){
     let items = [];
     for(let i = 0; i <= 0; i++){
         const item = new Ability(
+            gameDataObject.items[i].availableStock,
             gameDataObject.items[i].imagePath,
             gameDataObject.items[i].maxStock,
             gameDataObject.items[i].name,
@@ -273,6 +317,7 @@ function loadDataInLocalStorage(playerName){
     }
     for(let i = 1; i <= 2; i++){
         const item = new Investment(
+            gameDataObject.items[i].availableStock,
             gameDataObject.items[i].imagePath,
             gameDataObject.items[i].maxStock,
             gameDataObject.items[i].name,
@@ -283,6 +328,7 @@ function loadDataInLocalStorage(playerName){
     }
     for(let i = 3; i <= 10; i++){
         const item = new RealEstate(
+            gameDataObject.items[i].availableStock,
             gameDataObject.items[i].imagePath,
             gameDataObject.items[i].maxStock,
             gameDataObject.items[i].name,

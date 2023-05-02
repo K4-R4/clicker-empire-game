@@ -5,6 +5,9 @@ class Game{
         this.playerStatsUpdatedEvent = new CustomEvent("playerStatsUpdated");
         this.updatePerMillisecond = 1000;
     }
+    getGameLoop(){
+        return this.gameLoop;
+    }
     getItems(){
         return this.items;
     }
@@ -17,11 +20,18 @@ class Game{
     getUpdatePerMillisecond(){
         return this.updatePerMillisecond;
     }
+    setGameLoop(intervalId){
+        this.gameLoop = intervalId;
+    }
     startGameLoop(){
-        setInterval(() => {
+        const intervalId = setInterval(() => {
             this.getPlayer().workForDay();
             document.dispatchEvent(this.playerStatsUpdatedEvent);
         }, this.getUpdatePerMillisecond());
+        this.setGameLoop(intervalId);
+    }
+    stopGameLoop(){
+        clearInterval(this.getGameLoop());
     }
     click(){
         this.getPlayer().click();

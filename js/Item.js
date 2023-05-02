@@ -1,6 +1,6 @@
 class Item{
-    constructor(imagePath, maxStock, name, price){
-        this.availableStock = maxStock;
+    constructor(availableStock, imagePath, maxStock, name, price){
+        this.availableStock = availableStock;
         this.imagePath = imagePath;
         this.maxStock = maxStock;
         this.name = name;
