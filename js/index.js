@@ -178,7 +178,7 @@ function generateItemContainer(item){
     const thumbnail = document.createElement("div");
     const description = document.createElement("div");
     itemContainer.classList.add("col-12", "d-flex", "flex-row", "bg-dark", "py-3", "my-2", "item");
-    thumbnail.classList.add("col-lg-3", "d-none", "d-lg-block");
+    thumbnail.classList.add("col-lg-3", "d-flex", "justify-content-center", "align-items-center", "d-none", "d-lg-block", "p-0");
     description.classList.add("col-12", "col-lg-9", "d-flex", "flex-column", "justify-content-center", "align-items-center", "text-start", "p-0");
     thumbnail.innerHTML =
         `
@@ -186,13 +186,15 @@ function generateItemContainer(item){
         `;
     description.innerHTML =
         `
-            <div class="col-12 d-flex justify-content-between align-items-end p-0">
-                <div class="font-size-large">${item.getName()}</div>
-                <div class="font-size-large">${item.getSoldStock()}</div>
-            </div>
-            <div class="col-12 d-flex justify-content-between align-items-start p-0">
-                <div class="font-size-medium">$${item.getPrice().toLocaleString()}</div>
-                <div class="font-size-medium text-success">${item.getDescription()}</div>
+            <div class="col-12 d-flex flex-wrap p-0">
+                <div class="col-12 d-flex p-0">
+                    <div class="col-6 font-size-large text-left p-0">${item.getName()}</div>
+                    <div class="col-6 font-size-large text-right p-0">${item.getSoldStock()}</div>
+                </div>
+                <div class="col-12 d-flex p-0 mt-2">
+                    <div class="col-6 font-size-medium text-left p-0">$${item.getPrice().toLocaleString()}</div>
+                    <div class="col-6 font-size-medium text-success text-right p-0">${item.getDescription()}</div>
+                </div>
             </div>
         `;
     itemContainer.append(thumbnail, description);
