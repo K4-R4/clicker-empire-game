@@ -1,13 +1,15 @@
 import { Item } from "./Item.js";
 
 class Investment extends Item{
-    #interest;
-    constructor(name, maxStock, price, imagePath, interest){
-        super(name, maxStock, price, imagePath);
-        this.#interest = interest;
+    constructor(imagePath, maxStock, name, price, interest){
+        super(imagePath, maxStock, name, price);
+        this.interest = interest;
+    }
+    getInterest(){
+        return this.interest;
     }
     provideBenefit(player, quantity){
-        player.addDailyWage(super.getPrice() * quantity * this.#interest);
+        player.addDailyWage(super.getPrice() * quantity * this.getInterest());
     }
 }
 
