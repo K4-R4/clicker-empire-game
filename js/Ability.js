@@ -1,8 +1,8 @@
 import { Item } from "./Item.js";
 
 class Ability extends Item{
-    constructor(imagePath, maxStock, name, price, additionalWagePerClick){
-        super(imagePath, maxStock, name, price);
+    constructor(availableStock, imagePath, maxStock, name, price, additionalWagePerClick){
+        super(availableStock, imagePath, maxStock, name, price);
         this.additionalWagePerClick = additionalWagePerClick;
     }
     getAdditionalWagePerClick(){

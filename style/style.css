@@ -14,15 +14,31 @@ img.thumbnail{
     width: 70%;
 }
 
+.main-ui{
+    height: 90%;
+}
+
+.sub-ui{
+    height: 10%;
+}
+
 .player-stats{
     height: 20%;
 }
 
 .shop-page{
-    height: 70%;
+    height: 80%;
     overflow-y: scroll;
 }
 
 .transaction-page{
     height: 70%;
+}
+
+.icon{
+    height: 3rem;
+    width: 3rem;
+    padding: 0.5rem;
+    margin: 0.5rem 0 0.5rem 0.5rem;
+    border: 0.1rem solid;
 }

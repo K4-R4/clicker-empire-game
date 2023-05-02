@@ -1,8 +1,8 @@
 import { Item } from "./Item.js";
 
 class Investment extends Item{
-    constructor(imagePath, maxStock, name, price, interest){
-        super(imagePath, maxStock, name, price);
+    constructor(availableStock, imagePath, maxStock, name, price, interest){
+        super(availableStock, imagePath, maxStock, name, price);
         this.interest = interest;
     }
     getInterest(){
