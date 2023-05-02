@@ -49,17 +49,17 @@ function initializeUserAccount(){
 }
 function initializeGame(player){
     config.game = new Game(player, [
-        new Ability(500, "../img/flip-machine.png", 500, "Flip Machine", 15_000, 25),
-        new Investment(Infinity, "../img/stock.png", Infinity, "ETF Stock", 300_000, 0.1),
-        new Investment(Infinity, "../img/stock.png", Infinity, "ETF Bonds", 300_000, 0.07),
-        new RealEstate(1_000, "../img/lemonade.png", 1_000, "Lemonade Stand", 30_000, 30),
-        new RealEstate(500, "../img/ice-cream-truck.png", 500, "Ice Cream Truck", 100_000, 120),
-        new RealEstate(100, "../img/house.png", 100, "House", 2_000_000, 32_000),
-        new RealEstate(100, "../img/townhouse.png", 100, "Town House", 4_000_000, 64_000),
-        new RealEstate(20, "../img/mansion.png", 20, "Mansion", 25_000_000, 500_000),
-        new RealEstate(10, "../img/industrial-space.png", 10, "Industrial Space", 1_000_000_000, 2_200_000),
-        new RealEstate(5, "../img/hotel.png", 5, "Hotel Skyscraper", 10_000_000_000, 25_000_000),
-        new RealEstate(1, "../img/bullet-train.png", 1, "Bullet-Speed Sky Railway", 10_000_000_000_000, 30_000_000_000)
+        new Ability(500, "../img/flip-machine.png", 500, "Flip Machine", 15_000, 0, 25),
+        new Investment(Infinity, "../img/stock.png", Infinity, "ETF Stock", 300_000, 0, 0.1),
+        new Investment(Infinity, "../img/stock.png", Infinity, "ETF Bonds", 300_000, 0, 0.07),
+        new RealEstate(1_000, "../img/lemonade.png", 1_000, "Lemonade Stand", 30_000, 0, 30),
+        new RealEstate(500, "../img/ice-cream-truck.png", 500, "Ice Cream Truck", 100_000, 0, 120),
+        new RealEstate(100, "../img/house.png", 100, "House", 2_000_000, 0, 32_000),
+        new RealEstate(100, "../img/townhouse.png", 100, "Town House", 4_000_000, 0, 64_000),
+        new RealEstate(20, "../img/mansion.png", 20, "Mansion", 25_000_000, 0, 500_000),
+        new RealEstate(10, "../img/industrial-space.png", 10, "Industrial Space", 1_000_000_000, 0, 2_200_000),
+        new RealEstate(5, "../img/hotel.png", 5, "Hotel Skyscraper", 10_000_000_000, 0, 25_000_000),
+        new RealEstate(1, "../img/bullet-train.png", 1, "Bullet-Speed Sky Railway", 10_000_000_000_000, 0, 30_000_000_000)
     ]);
     displayBlock(config.initialPage);
     displayNone(config.gamePage);
@@ -69,21 +69,21 @@ function initializeGame(player){
 }
 function generateGamePage(){
     const container = document.createElement("div");
-    container.classList.add("bg-dark", "vh-75", "d-flex", "justify-content-center", "col-12", "text-white", "text-center");
+    container.classList.add("bg-dark", "vh-85", "d-flex", "justify-content-center", "col-12", "text-white", "text-center");
     container.append(generateLeftColumnOfGamePage(), generateRightColumnOfGamePage());
     return container;
 }
 function generateLeftColumnOfGamePage(){
     const leftColumn = document.createElement("div");
     leftColumn.setAttribute("id", "left-column");
-    leftColumn.classList.add("col-5", "flex-column", "my-2", "ml-2", "mr-1");
+    leftColumn.classList.add("col-3", "flex-column", "my-2", "ml-2", "mr-1");
     leftColumn.append(generateScoreContainer(), generateHamburgerContainer());
     return leftColumn;
 }
 function generateRightColumnOfGamePage(){
     const rightColumn = document.createElement("div");
     rightColumn.setAttribute("id", "right-column");
-    rightColumn.classList.add("col-7", "my-2", "mr-2", "ml-1");
+    rightColumn.classList.add("col-9", "my-2", "mr-2", "ml-1");
     rightColumn.append(generateMainUiContainer(), generateSubUiContainer());
     return rightColumn;
 }
@@ -94,8 +94,8 @@ function generateScoreContainer(){
     scoreContainer.classList.add("col-12", "bg-secondary", "py-3", "flex-grow-0");
     scoreContainer.innerHTML =
         `
-            <h3>${playerStats.hamburgerCount} Burgers</h3>
-            <h5>one click $${playerStats.wagePerClick}</h5>
+            <h3>${playerStats.hamburgerCount.toLocaleString()} Burgers</h3>
+            <h5>one click $${playerStats.wagePerClick.toLocaleString()}</h5>
         `;
     return scoreContainer;
 }
@@ -104,7 +104,7 @@ function generateHamburgerContainer(){
     hamburgerContainer.classList.add("col", "h-75", "d-flex", "justify-content-center", "align-items-center", "flex-grow-1");
     hamburgerContainer.innerHTML =
         `
-            <img alt="Hamburger" src="${config.hamburgerImage}" class="hamburger scaleOnClick w-50">
+            <img alt="Hamburger" src="${config.hamburgerImage}" class="hamburger scaleOnClick w-100">
         `;
     hamburgerContainer.append();
     hamburgerContainer.addEventListener("click", () => {
@@ -158,8 +158,8 @@ function generatePlayerStatsContainer(){
         `
             <div class="bg-dark col-5 h5 p-2 my-1">${playerStats.name}</div>
             <div class="bg-dark col-5 h5 p-2 my-1">${playerStats.age} years old</div>
-            <div class="bg-dark col-5 h5 p-2 my-1">${playerStats.daysGoneSinceBusinessStart} days</div>
-            <div class="bg-dark col-5 h5 p-2 my-1">$${playerStats.money}</div>
+            <div class="bg-dark col-5 h5 p-2 my-1">${playerStats.daysGoneSinceBusinessStart.toLocaleString()} days</div>
+            <div class="bg-dark col-5 h5 p-2 my-1">$${playerStats.money.toLocaleString()}</div>
         `;
     return playerStatsContainer;
 }
@@ -177,25 +177,27 @@ function generateItemContainer(item){
     const itemContainer = document.createElement("div");
     const thumbnail = document.createElement("div");
     const description = document.createElement("div");
-    const stock = document.createElement("div");
-    itemContainer.classList.add("col-12", "d-flex", "flex-row", "bg-dark", "py-4", "my-2");
-    thumbnail.classList.add("col-4");
-    description.classList.add("col-7", "d-flex", "flex-column", "justify-content-center", "align-items-center", "text-start");
-    stock.classList.add("col-1", "d-flex", "justify-content-center", "align-items-center");
+    itemContainer.classList.add("col-12", "d-flex", "flex-row", "bg-dark", "py-3", "my-2", "item");
+    thumbnail.classList.add("col-lg-3", "d-flex", "justify-content-center", "align-items-center", "d-none", "d-lg-block", "p-0");
+    description.classList.add("col-12", "col-lg-9", "d-flex", "flex-column", "justify-content-center", "align-items-center", "text-start", "p-0");
     thumbnail.innerHTML =
         `
             <img alt="thumbnail" src="${item.getImagePath()}" class="thumbnail">
         `;
     description.innerHTML =
         `
-            <h3>${item.getName()}</h3>
-            <h4>$${item.getPrice()}</h4>
+            <div class="col-12 d-flex flex-wrap p-0">
+                <div class="col-12 d-flex p-0">
+                    <div class="col-6 font-size-large text-left p-0">${item.getName()}</div>
+                    <div class="col-6 font-size-large text-right p-0">${item.getSoldStock()}</div>
+                </div>
+                <div class="col-12 d-flex p-0 mt-2">
+                    <div class="col-6 font-size-medium text-left p-0">$${item.getPrice().toLocaleString()}</div>
+                    <div class="col-6 font-size-medium text-success text-right p-0">${item.getDescription()}</div>
+                </div>
+            </div>
         `;
-    stock.innerHTML =
-        `
-            <h3>${item.getMaxStock() - item.getAvailableStock()}</h3>
-        `
-    itemContainer.append(thumbnail, description, stock);
+    itemContainer.append(thumbnail, description);
 
     itemContainer.addEventListener("click", () => {
         document.getElementById("shop-container").remove();
@@ -212,7 +214,7 @@ function generateTransactionContainer(item){
             <div class="col-8">
                 <h4>${item.getName()}</h4>
                 <p>
-                    Max Purchase: ${item.getMaxStock()}</br>
+                    Max Purchase: ${parseFloat(item.getMaxStock()) === Infinity ? "\u{221e}" : item.getMaxStock() - item.getAvailableStock()}</br>
                     Price: $${item.getPrice()}</br>
                 </p>
             </div>
@@ -223,7 +225,7 @@ function generateTransactionContainer(item){
                 <label for="number-of-orders" class="col-12 col-form-label text-left">How many would you like to purchase?</label>
                 <input type="number" name="number-of-orders" value="0" id="number-of-orders" class="col-12 form-control text-right">
                 <div id="total-cost" class="col-12 p-0 text-right">
-                    Total: $${item.calculateTotalCost(0)}
+                    Total: $${item.calculateTotalCost(0).toLocaleString()}
                 </div>
             </div>
         `;
@@ -231,7 +233,7 @@ function generateTransactionContainer(item){
         const quantity = event.target.value;
         document.getElementById("total-cost").innerHTML =
             `
-                Total: $${item.calculateTotalCost(quantity)}
+                Total: $${item.calculateTotalCost(quantity).toLocaleString()}
             `;
     });
 
@@ -321,6 +323,7 @@ function loadDataInLocalStorage(playerName){
             gameDataObject.items[i].maxStock,
             gameDataObject.items[i].name,
             gameDataObject.items[i].price,
+            gameDataObject.items[i].soldStock,
             gameDataObject.items[i].additionalWagePerClick
         );
         items.push(item);
@@ -332,6 +335,7 @@ function loadDataInLocalStorage(playerName){
             gameDataObject.items[i].maxStock,
             gameDataObject.items[i].name,
             gameDataObject.items[i].price,
+            gameDataObject.items[i].soldStock,
             gameDataObject.items[i].interest
         );
         items.push(item);
@@ -343,6 +347,7 @@ function loadDataInLocalStorage(playerName){
             gameDataObject.items[i].maxStock,
             gameDataObject.items[i].name,
             gameDataObject.items[i].price,
+            gameDataObject.items[i].soldStock,
             gameDataObject.items[i].additionalDailyWage
         );
         items.push(item);
