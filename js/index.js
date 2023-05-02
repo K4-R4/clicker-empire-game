@@ -222,8 +222,18 @@ function generateTransactionContainer(item){
             <div class="col-12 form-group">
                 <label for="number-of-orders" class="col-12 col-form-label text-left">How many would you like to purchase?</label>
                 <input type="number" name="number-of-orders" value="0" id="number-of-orders" class="col-12 form-control text-right">
+                <div id="total-cost" class="col-12 p-0 text-right">
+                    Total: $${item.calculateTotalCost(0)}
+                </div>
             </div>
         `;
+    transactionContainer.querySelector("#number-of-orders").addEventListener("change", (event) => {
+        const quantity = event.target.value;
+        document.getElementById("total-cost").innerHTML =
+            `
+                Total: $${item.calculateTotalCost(quantity)}
+            `;
+    });
 
     const buttons = createButtons("Go Back", "Purchase");
     const backButton = buttons.querySelector(".back-button");

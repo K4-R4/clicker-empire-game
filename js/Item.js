@@ -34,7 +34,7 @@ class Item{
         throw new Error('Method "provideBenefit()" must be implemented.');
     }
     calculateTotalCost(quantity){
-        return this.getPrice() * quantity;
+        return this.getPrice() * Math.max(quantity, 0);
     }
 }
 
