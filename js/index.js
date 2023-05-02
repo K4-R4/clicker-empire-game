@@ -11,14 +11,16 @@ const config = {
     hamburgerImage : "../img/hamburger.png"
 }
 config.initialPage.querySelector("#register").addEventListener("click", (event) => {
-    const player = initializeUserAccount();
-    initializeGame(player);
     event.preventDefault();
+    const player = initializeUserAccount();
+    if(player === null) return;
+    initializeGame(player);
 });
 
 config.initialPage.querySelector("#login").addEventListener("click", (event) => {
-    const player = initializeUserAccount();
     event.preventDefault();
+    const player = initializeUserAccount();
+    if(player === null) return;
     config.game = loadDataInLocalStorage(player.getName());
     if(config.game === null) return;
     config.game.startGameLoop();
@@ -41,7 +43,7 @@ function initializeUserAccount(){
     const playerName = config.initialPage.querySelector("#login-form").querySelector(`input[name="user-name"]`).value;
     if(playerName === ""){
         alert("Please put your name");
-        return;
+        return null;
     }
     return new Player(20, 0, 0, 0, 50000, playerName, 25);
 }
@@ -131,12 +133,14 @@ function generateSubUiContainer(){
     const resetButton = subUiContainer.querySelector("#reset-button");
     const saveButton = subUiContainer.querySelector("#save-button")
     resetButton.addEventListener("click", () => {
+        if(!confirm("Are you sure you want to reset all data?")) return;
         const playerName = config.game.player.getName();
         const player = new Player(20, 0, 0, 0, 50000, playerName, 25);
         config.game.stopGameLoop();
         initializeGame(player);
     });
     saveButton.addEventListener("click", () => {
+        alert("Saved your data. Please put the same name when you login");
         saveDataInLocalStorage();
         config.gamePage.innerHTML = "";
         config.game.stopGameLoop();
