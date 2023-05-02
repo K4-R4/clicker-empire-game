@@ -1,45 +1,38 @@
 import { Wallet } from "./Wallet.js";
 
 class Player{
-    #name;
-    #age;
-    #daysGoneSinceBusinessStart;
-    #hamburgerCount;
-    #wallet;
-    #wagePerClick;
-    #dailyWage;
-    constructor(name, age = 20, daysGoneSinceBusinessStart = 0, hamburgerCount = 0, initialCapital = 50000, wagePerClick = 25, dailyWage = 0){
-        this.#name = name;
-        this.#age = age;
-        this.#daysGoneSinceBusinessStart = daysGoneSinceBusinessStart;
-        this.#hamburgerCount = hamburgerCount;
-        this.#wallet = new Wallet(initialCapital);
-        this.#wagePerClick = wagePerClick;
-        this.#dailyWage = dailyWage;
-    }
-    getName(){
-        return this.#name;
+    constructor(age, dailyWage, daysGoneSinceBusinessStart, hamburgerCount, initialCapital, name, wagePerClick){
+        this.age = age;
+        this.dailyWage = dailyWage;
+        this.daysGoneSinceBusinessStart = daysGoneSinceBusinessStart;
+        this.hamburgerCount = hamburgerCount;
+        this.name = name;
+        this.wallet = new Wallet(initialCapital);
+        this.wagePerClick = wagePerClick;
     }
     getAge(){
-        return this.#age;
-    }
-    getDaysGoneSinceBusinessStart(){
-        return this.#daysGoneSinceBusinessStart;
-    }
-    getHamburgerCount(){
-        return this.#hamburgerCount;
-    }
-    getWagePerClick(){
-        return this.#wagePerClick;
+        return this.age;
     }
     getDailyWage(){
-        return this.#dailyWage;
+        return this.dailyWage;
     }
-    setHamburgerCount(amount){
-        this.#hamburgerCount = amount;
+    getDaysGoneSinceBusinessStart(){
+        return this.daysGoneSinceBusinessStart;
+    }
+    getHamburgerCount(){
+        return this.hamburgerCount;
+    }
+    getName(){
+        return this.name;
+    }
+    getWagePerClick(){
+        return this.wagePerClick;
     }
     setDaysGoneSinceBusinessStart(daysGoneSinceBusinessStart){
-        this.#daysGoneSinceBusinessStart = daysGoneSinceBusinessStart;
+        this.daysGoneSinceBusinessStart = daysGoneSinceBusinessStart;
+    }
+    setHamburgerCount(amount){
+        this.hamburgerCount = amount;
     }
     getStats(){
         return {
@@ -47,31 +40,31 @@ class Player{
             age: this.getAge(),
             daysGoneSinceBusinessStart: this.getDaysGoneSinceBusinessStart(),
             hamburgerCount: this.getHamburgerCount(),
-            money: this.#wallet.getMoney(),
+            money: this.wallet.getMoney(),
             dailyWage: this.getDailyWage(),
             wagePerClick: this.getWagePerClick()
         };
     }
-    addWagePerClick(additionalWagePerClick){
-        this.#wagePerClick += additionalWagePerClick;
-    }
     addDailyWage(additionalDailyWage){
-        this.#dailyWage += additionalDailyWage;
+        this.dailyWage += additionalDailyWage;
+    }
+    addWagePerClick(additionalWagePerClick){
+        this.wagePerClick += additionalWagePerClick;
     }
     click(){
-        this.#wallet.deposit(this.getWagePerClick());
+        this.wallet.deposit(this.getWagePerClick());
         this.setHamburgerCount(this.getHamburgerCount() + 1);
-        return this.#wallet.getMoney();
+        return this.wallet.getMoney();
     }
     workForDay(){
-        this.#wallet.deposit(this.getDailyWage());
+        this.wallet.deposit(this.getDailyWage());
         this.setDaysGoneSinceBusinessStart(this.getDaysGoneSinceBusinessStart() + 1);
     }
     isAffordable(amount){
-        return amount <= this.#wallet.getMoney();
+        return amount <= this.wallet.getMoney();
     }
     buyItem(amount){
-        this.#wallet.withdraw(amount);
+        this.wallet.withdraw(amount);
     }
 }
 

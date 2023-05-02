@@ -1,13 +1,12 @@
 class Wallet{
-    #money;
     constructor(money){
-        this.#money = money;
+        this.money = money;
     }
     getMoney(){
-        return this.#money;
+        return this.money;
     }
     setMoney(money){
-        this.#money = money;
+        this.money = money;
     }
     deposit(amount){
         const amountToDeposit = Math.max(amount, 0);
