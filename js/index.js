@@ -8,7 +8,7 @@ const config = {
     initialPage : document.getElementById("initial-page"),
     gamePage : document.getElementById("game-page"),
     game: null,
-    hamburgerImage : "https://github.com/K4-R4/clicker-empire-game/blob/main/img/hamburger.png"
+    hamburgerImage : "https://github.com/K4-R4/clicker-empire-game/blob/main/img/hamburger.png?raw=true"
 }
 config.initialPage.querySelector("#register").addEventListener("click", (event) => {
     event.preventDefault();
@@ -49,17 +49,17 @@ function initializeUserAccount(){
 }
 function initializeGame(player){
     config.game = new Game(player, [
-        new Ability(500, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/flip-machine.png", 500, "Flip Machine", 15_000, 0, 25),
-        new Investment(Infinity, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/stock.png", Infinity, "ETF Stock", 300_000, 0, 0.1),
-        new Investment(Infinity, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/stock.png", Infinity, "ETF Bonds", 300_000, 0, 0.07),
-        new RealEstate(1_000, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/lemonade.png", 1_000, "Lemonade Stand", 30_000, 0, 30),
-        new RealEstate(500, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/ice-cream-truck.png", 500, "Ice Cream Truck", 100_000, 0, 120),
-        new RealEstate(100, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/house.png", 100, "House", 2_000_000, 0, 32_000),
-        new RealEstate(100, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/townhouse.png", 100, "Town House", 4_000_000, 0, 64_000),
-        new RealEstate(20, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/mansion.png", 20, "Mansion", 25_000_000, 0, 500_000),
-        new RealEstate(10, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/industrial-space.png", 10, "Industrial Space", 1_000_000_000, 0, 2_200_000),
-        new RealEstate(5, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/hotel.png", 5, "Hotel Skyscraper", 10_000_000_000, 0, 25_000_000),
-        new RealEstate(1, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/bullet-train.png", 1, "Bullet-Speed Sky Railway", 10_000_000_000_000, 0, 30_000_000_000)
+        new Ability(500, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/flip-machine.png?raw=true", 500, "Flip Machine", 15_000, 0, 25),
+        new Investment(Infinity, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/stock.png?raw=true", Infinity, "ETF Stock", 300_000, 0, 0.1),
+        new Investment(Infinity, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/stock.png?raw=true", Infinity, "ETF Bonds", 300_000, 0, 0.07),
+        new RealEstate(1_000, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/lemonade.png?raw=true", 1_000, "Lemonade Stand", 30_000, 0, 30),
+        new RealEstate(500, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/ice-cream-truck.png?raw=true", 500, "Ice Cream Truck", 100_000, 0, 120),
+        new RealEstate(100, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/house.png?raw=true", 100, "House", 2_000_000, 0, 32_000),
+        new RealEstate(100, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/townhouse.png?raw=true", 100, "Town House", 4_000_000, 0, 64_000),
+        new RealEstate(20, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/mansion.png?raw=true", 20, "Mansion", 25_000_000, 0, 500_000),
+        new RealEstate(10, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/industrial-space.png?raw=true", 10, "Industrial Space", 1_000_000_000, 0, 2_200_000),
+        new RealEstate(5, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/hotel.png?raw=true", 5, "Hotel Skyscraper", 10_000_000_000, 0, 25_000_000),
+        new RealEstate(1, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/bullet-train.png?raw=true", 1, "Bullet-Speed Sky Railway", 10_000_000_000_000, 0, 30_000_000_000)
     ]);
     displayBlock(config.initialPage);
     displayNone(config.gamePage);
