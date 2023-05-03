@@ -1,0 +1,80 @@
+:root{
+    --font-size-large: 1.5rem;
+    --font-size-medium: 1rem;
+    --font-size-small: 0.5rem;
+    --dark-blue: #426579;
+    --dark: #212529;
+}
+
+.font-size-large{
+    font-size: var(--font-size-large);
+}
+
+.font-size-medium{
+    font-size: var(--font-size-medium);
+}
+
+.font-size-small{
+    font-size: var(--font-size-small);
+}
+
+.bg-dark-blue{
+    background-color: var(--dark-blue);
+}
+
+.stats-border{
+    border: 0.2rem solid var(--dark);
+}
+
+.vh-85{
+    height: 85vh;
+}
+
+.hamburger:hover{
+    cursor: pointer;
+    transform: scale(1.01);
+}
+
+.hamburger:active{
+    transform: scale(1.03);
+}
+
+.player-stats{
+    outline: 0.2rem solid var(--dark);
+}
+
+.item:hover{
+    cursor: pointer;
+}
+
+img.thumbnail{
+    width: 70%;
+}
+
+.main-ui{
+    height: 90%;
+}
+
+.sub-ui{
+    height: 10%;
+}
+
+.shop-page{
+    height: 85%;
+    overflow-y: scroll;
+}
+
+.transaction-page{
+}
+
+.icon{
+    height: 3rem;
+    width: 3rem;
+    padding: 0.5rem;
+    margin: 0.5rem 0 0.5rem 0.5rem;
+    border: 0.1rem solid;
+}
+
+.icon:hover{
+    cursor: pointer;
+}
