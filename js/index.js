@@ -182,7 +182,7 @@ function generateItemContainer(item){
     description.classList.add("col-12", "col-lg-9", "d-flex", "flex-column", "justify-content-center", "align-items-center", "text-start", "p-0");
     thumbnail.innerHTML =
         `
-            <img alt="thumbnail" src="${item.getImagePath()}" class="thumbnail">
+            <img alt="thumbnail" src="${item.getImagePath()}" class="thumbnail" loading="lazy">
         `;
     description.innerHTML =
         `
