@@ -9,7 +9,7 @@ class RealEstate extends Item{
         return this.additionalDailyWage;
     }
     getDescription() {
-        return `+$${super.getPrice().toLocaleString()} / sec`;
+        return `+$${this.getAdditionalDailyWage().toLocaleString()} / sec`;
     }
 
     provideBenefit(player, quantity){

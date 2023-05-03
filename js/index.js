@@ -69,14 +69,14 @@ function initializeGame(player){
 }
 function generateGamePage(){
     const container = document.createElement("div");
-    container.classList.add("bg-dark", "vh-85", "d-flex", "justify-content-center", "col-12", "text-white", "text-center");
+    container.classList.add("bg-dark-blue", "vh-85", "d-flex", "justify-content-center", "col-12", "text-white", "text-center");
     container.append(generateLeftColumnOfGamePage(), generateRightColumnOfGamePage());
     return container;
 }
 function generateLeftColumnOfGamePage(){
     const leftColumn = document.createElement("div");
     leftColumn.setAttribute("id", "left-column");
-    leftColumn.classList.add("col-3", "flex-column", "my-2", "ml-2", "mr-1");
+    leftColumn.classList.add("col-3", "bg-dark", "flex-column", "my-2", "ml-2", "mr-1", "px-2");
     leftColumn.append(generateScoreContainer(), generateHamburgerContainer());
     return leftColumn;
 }
@@ -91,11 +91,11 @@ function generateScoreContainer(){
     const playerStats = config.game.getPlayerStats();
     const scoreContainer = document.createElement("div");
     scoreContainer.setAttribute("id", "score-container");
-    scoreContainer.classList.add("col-12", "bg-secondary", "py-3", "flex-grow-0");
+    scoreContainer.classList.add("col-12", "bg-dark-blue", "py-2", "mt-2", "flex-grow-0");
     scoreContainer.innerHTML =
         `
-            <h3>${playerStats.hamburgerCount.toLocaleString()} Burgers</h3>
-            <h5>one click $${playerStats.wagePerClick.toLocaleString()}</h5>
+            <div class="font-size-large">${playerStats.hamburgerCount.toLocaleString()} Burgers</div>
+            <div class="font-size-medium">one click $${playerStats.wagePerClick.toLocaleString()}</div>
         `;
     return scoreContainer;
 }
@@ -115,7 +115,7 @@ function generateHamburgerContainer(){
 function generateMainUiContainer(){
     const mainUiContainer = document.createElement("div");
     mainUiContainer.setAttribute("id", "main-ui-container");
-    mainUiContainer.classList.add("col-12", "main-ui");
+    mainUiContainer.classList.add("col-12", "main-ui", "p-0", "m-0");
     mainUiContainer.append(generatePlayerStatsContainer(), generateShopContainer());
     return mainUiContainer;
 }
@@ -153,13 +153,13 @@ function generatePlayerStatsContainer(){
     const playerStats = config.game.getPlayerStats();
     const playerStatsContainer = document.createElement("div");
     playerStatsContainer.setAttribute("id", "player-stats-container");
-    playerStatsContainer.classList.add("player-stats", "col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-around", "align-items-center", "py-2");
+    playerStatsContainer.classList.add("player-stats", "col-12", "p-0", "bg-dark", "d-flex", "flex-wrap", "justify-content-around", "align-items-center");
     playerStatsContainer.innerHTML =
         `
-            <div class="bg-dark col-5 h5 p-2 my-1">${playerStats.name}</div>
-            <div class="bg-dark col-5 h5 p-2 my-1">${playerStats.age} years old</div>
-            <div class="bg-dark col-5 h5 p-2 my-1">${playerStats.daysGoneSinceBusinessStart.toLocaleString()} days</div>
-            <div class="bg-dark col-5 h5 p-2 my-1">$${playerStats.money.toLocaleString()}</div>
+            <div class="bg-dark-blue col-12 col-lg-6 border border-3 border-dark py-2 font-size-medium">${playerStats.name}</div>
+            <div class="bg-dark-blue col-12 col-lg-6 border border-3 border-dark py-2 font-size-medium">${playerStats.age} years old</div>
+            <div class="bg-dark-blue col-12 col-lg-6 border border-3 border-dark py-2 font-size-medium">${playerStats.daysGoneSinceBusinessStart.toLocaleString()} days</div>
+            <div class="bg-dark-blue col-12 col-lg-6 border border-3 border-dark py-2 font-size-medium">$${playerStats.money.toLocaleString()}</div>
         `;
     return playerStatsContainer;
 }
@@ -167,7 +167,7 @@ function generateShopContainer(){
     const items = config.game.getItems();
     const container = document.createElement("div");
     container.setAttribute("id", "shop-container");
-    container.classList.add("shop-page", "my-2", "py-2", "col-12", "bg-secondary", "d-flex", "flex-wrap", "justify-content-center", "align-items-center");
+    container.classList.add("shop-page", "mt-4", "py-2", "col-12", "bg-dark", "d-flex", "flex-wrap", "justify-content-center", "align-items-center");
     for(const item of items){
         container.append(generateItemContainer(item));
     }
@@ -177,7 +177,7 @@ function generateItemContainer(item){
     const itemContainer = document.createElement("div");
     const thumbnail = document.createElement("div");
     const description = document.createElement("div");
-    itemContainer.classList.add("col-12", "d-flex", "flex-row", "bg-dark", "py-3", "my-2", "item");
+    itemContainer.classList.add("col-12", "d-flex", "flex-row", "bg-dark-blue", "py-3", "my-2", "item");
     thumbnail.classList.add("col-lg-3", "d-flex", "justify-content-center", "align-items-center", "d-none", "d-lg-block", "p-0");
     description.classList.add("col-12", "col-lg-9", "d-flex", "flex-column", "justify-content-center", "align-items-center", "text-start", "p-0");
     thumbnail.innerHTML =
@@ -208,7 +208,7 @@ function generateItemContainer(item){
 function generateTransactionContainer(item){
     const transactionContainer = document.createElement("div");
     transactionContainer.setAttribute("id", "transaction-container");
-    transactionContainer.classList.add("transaction-page", "my-2", "py-2", "col-12", "d-flex", "flex-row", "flex-wrap", "bg-secondary", "py-4", "my-1");
+    transactionContainer.classList.add("transaction-page", "my-2", "py-2", "col-12", "d-flex", "flex-row", "flex-wrap", "bg-dark", "py-4", "my-1");
     transactionContainer.innerHTML =
         `
             <div class="col-8">
