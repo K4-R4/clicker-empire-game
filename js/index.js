@@ -1,28 +1,28 @@
-import { Game } from "./Game.js";
+import {Game} from "./Game.js";
 import {Player} from "./Player.js";
 import {Ability} from "./Ability.js";
 import {Investment} from "./Investment.js";
 import {RealEstate} from "./RealEstate.js";
 
 const config = {
-    initialPage : document.getElementById("initial-page"),
-    gamePage : document.getElementById("game-page"),
+    initialPage: document.getElementById("initial-page"),
+    gamePage: document.getElementById("game-page"),
     game: null,
-    hamburgerImage : "https://github.com/K4-R4/clicker-empire-game/blob/main/img/hamburger.png?raw=true"
+    hamburgerImage: "https://github.com/K4-R4/clicker-empire-game/blob/main/img/hamburger.png?raw=true"
 }
 config.initialPage.querySelector("#register").addEventListener("click", (event) => {
     event.preventDefault();
     const player = initializeUserAccount();
-    if(player === null) return;
+    if (player === null) return;
     initializeGame(player);
 });
 
 config.initialPage.querySelector("#login").addEventListener("click", (event) => {
     event.preventDefault();
     const player = initializeUserAccount();
-    if(player === null) return;
+    if (player === null) return;
     config.game = loadDataInLocalStorage(player.getName());
-    if(config.game === null) return;
+    if (config.game === null) return;
     config.game.startGameLoop();
     displayBlock(config.initialPage);
     displayNone(config.gamePage);
@@ -31,23 +31,27 @@ config.initialPage.querySelector("#login").addEventListener("click", (event) => 
 document.addEventListener("playerStatsUpdated", () => {
     updatePlayerStats();
 });
-function displayNone(ele){
+
+function displayNone(ele) {
     ele.classList.add("d-block");
     ele.classList.remove("d-none");
 }
-function displayBlock(ele){
+
+function displayBlock(ele) {
     ele.classList.add("d-none");
     ele.classList.remove("d-block");
 }
-function initializeUserAccount(){
+
+function initializeUserAccount() {
     const playerName = config.initialPage.querySelector("#login-form").querySelector(`input[name="user-name"]`).value;
-    if(playerName === ""){
+    if (playerName === "") {
         alert("Please put your name");
         return null;
     }
     return new Player(20, 0, 0, 0, 50000, playerName, 25);
 }
-function initializeGame(player){
+
+function initializeGame(player) {
     config.game = new Game(player, [
         new Ability(500, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/flip-machine.png?raw=true", 500, "Flip Machine", 15_000, 0, 25),
         new Investment(Infinity, "https://github.com/K4-R4/clicker-empire-game/blob/main/img/stock.png?raw=true", Infinity, "ETF Stock", 300_000, 0, 0.1),
@@ -67,27 +71,31 @@ function initializeGame(player){
     config.gamePage.innerHTML = "";
     config.gamePage.append(generateGamePage());
 }
-function generateGamePage(){
+
+function generateGamePage() {
     const container = document.createElement("div");
     container.classList.add("bg-dark-blue", "vh-85", "d-flex", "justify-content-center", "col-12", "text-white", "text-center");
     container.append(generateLeftColumnOfGamePage(), generateRightColumnOfGamePage());
     return container;
 }
-function generateLeftColumnOfGamePage(){
+
+function generateLeftColumnOfGamePage() {
     const leftColumn = document.createElement("div");
     leftColumn.setAttribute("id", "left-column");
     leftColumn.classList.add("col-3", "bg-dark", "flex-column", "my-2", "ml-2", "mr-1", "px-2");
     leftColumn.append(generateScoreContainer(), generateHamburgerContainer());
     return leftColumn;
 }
-function generateRightColumnOfGamePage(){
+
+function generateRightColumnOfGamePage() {
     const rightColumn = document.createElement("div");
     rightColumn.setAttribute("id", "right-column");
     rightColumn.classList.add("col-9", "my-2", "mr-2", "ml-1");
     rightColumn.append(generateMainUiContainer(), generateSubUiContainer());
     return rightColumn;
 }
-function generateScoreContainer(){
+
+function generateScoreContainer() {
     const playerStats = config.game.getPlayerStats();
     const scoreContainer = document.createElement("div");
     scoreContainer.setAttribute("id", "score-container");
@@ -99,7 +107,8 @@ function generateScoreContainer(){
         `;
     return scoreContainer;
 }
-function generateHamburgerContainer(){
+
+function generateHamburgerContainer() {
     const hamburgerContainer = document.createElement("div");
     hamburgerContainer.classList.add("col", "h-75", "d-flex", "justify-content-center", "align-items-center", "flex-grow-1");
     hamburgerContainer.innerHTML =
@@ -112,7 +121,8 @@ function generateHamburgerContainer(){
     });
     return hamburgerContainer;
 }
-function generateMainUiContainer(){
+
+function generateMainUiContainer() {
     const mainUiContainer = document.createElement("div");
     mainUiContainer.setAttribute("id", "main-ui-container");
     mainUiContainer.classList.add("col-12", "main-ui", "p-0", "mt-1");
@@ -120,7 +130,7 @@ function generateMainUiContainer(){
     return mainUiContainer;
 }
 
-function generateSubUiContainer(){
+function generateSubUiContainer() {
     const subUiContainer = document.createElement("div");
     subUiContainer.setAttribute("id", "sub-ui-container");
     subUiContainer.classList.add("col-12", "d-flex", "justify-content-end", "align-items-center", "sub-ui", "mt-2");
@@ -133,7 +143,7 @@ function generateSubUiContainer(){
     const resetButton = subUiContainer.querySelector("#reset-button");
     const saveButton = subUiContainer.querySelector("#save-button")
     resetButton.addEventListener("click", () => {
-        if(!confirm("Are you sure you want to reset all data?")) return;
+        if (!confirm("Are you sure you want to reset all data?")) return;
         const playerName = config.game.player.getName();
         const player = new Player(20, 0, 0, 0, 50000, playerName, 25);
         config.game.stopGameLoop();
@@ -149,7 +159,8 @@ function generateSubUiContainer(){
     });
     return subUiContainer;
 }
-function generatePlayerStatsContainer(){
+
+function generatePlayerStatsContainer() {
     const playerStats = config.game.getPlayerStats();
     const playerStatsContainer = document.createElement("div");
     playerStatsContainer.setAttribute("id", "player-stats-container");
@@ -163,17 +174,19 @@ function generatePlayerStatsContainer(){
         `;
     return playerStatsContainer;
 }
-function generateShopContainer(){
+
+function generateShopContainer() {
     const items = config.game.getItems();
     const container = document.createElement("div");
     container.setAttribute("id", "shop-container");
     container.classList.add("shop-page", "mt-4", "py-1", "px-2", "col-12", "bg-dark", "d-flex", "flex-wrap", "justify-content-center", "align-items-center");
-    for(const item of items){
+    for (const item of items) {
         container.append(generateItemContainer(item));
     }
     return container;
 }
-function generateItemContainer(item){
+
+function generateItemContainer(item) {
     const itemContainer = document.createElement("div");
     const thumbnail = document.createElement("div");
     const description = document.createElement("div");
@@ -205,7 +218,8 @@ function generateItemContainer(item){
     });
     return itemContainer;
 }
-function generateTransactionContainer(item){
+
+function generateTransactionContainer(item) {
     const transactionContainer = document.createElement("div");
     transactionContainer.setAttribute("id", "transaction-container");
     transactionContainer.classList.add("transaction-page", "mt-4", "py-1", "col-12", "d-flex", "flex-row", "flex-wrap", "bg-dark", "py-4", "my-1");
@@ -251,11 +265,11 @@ function generateTransactionContainer(item){
     nextButton.addEventListener("click", () => {
         const quantity = document.getElementById("number-of-orders").value;
         const amount = item.calculateTotalCost(quantity);
-        if(!item.isStockAvailable(quantity)){
+        if (!item.isStockAvailable(quantity)) {
             alert("Invalid number");
             return;
         }
-        if(!config.game.getPlayer().isAffordable(amount)){
+        if (!config.game.getPlayer().isAffordable(amount)) {
             alert("You don't have enough money");
             return;
         }
@@ -268,7 +282,8 @@ function generateTransactionContainer(item){
     transactionContainer.append(buttons);
     return transactionContainer;
 }
-function updatePlayerStats(){
+
+function updatePlayerStats() {
     const leftColumn = config.gamePage.querySelector("#left-column");
     const rightColumn = config.gamePage.querySelector("#right-column");
 
@@ -277,7 +292,8 @@ function updatePlayerStats(){
     document.getElementById("player-stats-container").remove();
     rightColumn.querySelector("#main-ui-container").prepend(generatePlayerStatsContainer());
 }
-function createButtons(leftButtonName, rightButtonName){
+
+function createButtons(leftButtonName, rightButtonName) {
     const buttons = document.createElement("div");
     const leftButton = document.createElement("button");
     const rightButton = document.createElement("button");
@@ -292,7 +308,7 @@ function createButtons(leftButtonName, rightButtonName){
     return buttons;
 }
 
-function saveDataInLocalStorage(){
+function saveDataInLocalStorage() {
     const playerName = config.game.getPlayer().getName();
     const gameJsonData = JSON.stringify(config.game, (key, value) => {
         return value === Infinity ? "Infinity" : value;
@@ -300,9 +316,9 @@ function saveDataInLocalStorage(){
     localStorage.setItem(playerName, gameJsonData);
 }
 
-function loadDataInLocalStorage(playerName){
+function loadDataInLocalStorage(playerName) {
     const gameJsonData = localStorage.getItem(playerName);
-    if(gameJsonData === null){
+    if (gameJsonData === null) {
         alert("There is no data");
         return null;
     }
@@ -319,7 +335,7 @@ function loadDataInLocalStorage(playerName){
         gameDataObject.player.wagePerClick
     );
     let items = [];
-    for(let i = 0; i <= 0; i++){
+    for (let i = 0; i <= 0; i++) {
         const item = new Ability(
             gameDataObject.items[i].availableStock,
             gameDataObject.items[i].imagePath,
@@ -331,7 +347,7 @@ function loadDataInLocalStorage(playerName){
         );
         items.push(item);
     }
-    for(let i = 1; i <= 2; i++){
+    for (let i = 1; i <= 2; i++) {
         const item = new Investment(
             gameDataObject.items[i].availableStock,
             gameDataObject.items[i].imagePath,
@@ -343,7 +359,7 @@ function loadDataInLocalStorage(playerName){
         );
         items.push(item);
     }
-    for(let i = 3; i <= 10; i++){
+    for (let i = 3; i <= 10; i++) {
         const item = new RealEstate(
             gameDataObject.items[i].availableStock,
             gameDataObject.items[i].imagePath,

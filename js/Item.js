@@ -1,5 +1,5 @@
-class Item{
-    constructor(availableStock, imagePath, maxStock, name, price, soldStock){
+class Item {
+    constructor(availableStock, imagePath, maxStock, name, price, soldStock) {
         this.availableStock = availableStock;
         this.imagePath = imagePath;
         this.maxStock = maxStock;
@@ -7,46 +7,59 @@ class Item{
         this.soldStock = soldStock;
         this.price = price;
     }
-    getAvailableStock(){
+
+    getAvailableStock() {
         return this.availableStock;
     }
-    getImagePath(){
+
+    getImagePath() {
         return this.imagePath;
     }
-    getMaxStock(){
+
+    getMaxStock() {
         return this.maxStock;
     }
-    getName(){
+
+    getName() {
         return this.name;
     }
-    getPrice(){
+
+    getPrice() {
         return this.price;
     }
-    getSoldStock(){
+
+    getSoldStock() {
         return this.soldStock;
     }
-    getDescription(){
+
+    getDescription() {
         throw new Error('Method "getDescription()" must be implemented.');
     }
-    setAvailableStock(quantity){
+
+    setAvailableStock(quantity) {
         this.availableStock = quantity;
     }
-    setSoldStock(quantity){
+
+    setSoldStock(quantity) {
         this.soldStock = quantity;
     }
-    isStockAvailable(quantity){
+
+    isStockAvailable(quantity) {
         return quantity > 0 && quantity <= this.getAvailableStock();
     }
-    transact(quantity){
+
+    transact(quantity) {
         this.setSoldStock(this.getSoldStock() + parseInt(quantity));
         this.setAvailableStock(this.getAvailableStock() - quantity);
     }
-    provideBenefit(player, quantity){
+
+    provideBenefit(player, quantity) {
         throw new Error('Method "provideBenefit()" must be implemented.');
     }
-    calculateTotalCost(quantity){
+
+    calculateTotalCost(quantity) {
         return this.getPrice() * Math.max(quantity, 0);
     }
 }
 
-export { Item };
+export {Item};
