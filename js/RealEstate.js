@@ -1,20 +1,22 @@
-import { Item } from "./Item.js";
+import {Item} from "./Item.js";
 
-class RealEstate extends Item{
-    constructor(availableStock, imagePath, maxStock, name, price, soldStock, additionalDailyWage){
+class RealEstate extends Item {
+    constructor(availableStock, imagePath, maxStock, name, price, soldStock, additionalDailyWage) {
         super(availableStock, imagePath, maxStock, name, price, soldStock);
         this.additionalDailyWage = additionalDailyWage;
     }
-    getAdditionalDailyWage(){
+
+    getAdditionalDailyWage() {
         return this.additionalDailyWage;
     }
+
     getDescription() {
         return `+$${this.getAdditionalDailyWage().toLocaleString()} / sec`;
     }
 
-    provideBenefit(player, quantity){
+    provideBenefit(player, quantity) {
         player.addDailyWage(this.getAdditionalDailyWage() * quantity);
     }
 }
 
-export { RealEstate };
+export {RealEstate};

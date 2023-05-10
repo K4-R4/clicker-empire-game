@@ -1,43 +1,53 @@
-class Game{
-    constructor(player, items){
+class Game {
+    constructor(player, items) {
         this.items = items;
         this.player = player;
         this.playerStatsUpdatedEvent = new CustomEvent("playerStatsUpdated");
         this.updatePerMillisecond = 1000;
     }
-    getGameLoop(){
+
+    getGameLoop() {
         return this.gameLoop;
     }
-    getItems(){
+
+    getItems() {
         return this.items;
     }
-    getPlayer(){
+
+    getPlayer() {
         return this.player;
     }
-    getPlayerStats(){
+
+    getPlayerStats() {
         return this.getPlayer().getStats();
     }
-    getUpdatePerMillisecond(){
+
+    getUpdatePerMillisecond() {
         return this.updatePerMillisecond;
     }
-    setGameLoop(intervalId){
+
+    setGameLoop(intervalId) {
         this.gameLoop = intervalId;
     }
-    startGameLoop(){
+
+    startGameLoop() {
         const intervalId = setInterval(() => {
             this.getPlayer().workForDay();
             document.dispatchEvent(this.playerStatsUpdatedEvent);
         }, this.getUpdatePerMillisecond());
         this.setGameLoop(intervalId);
     }
-    stopGameLoop(){
+
+    stopGameLoop() {
         clearInterval(this.getGameLoop());
     }
-    click(){
+
+    click() {
         this.getPlayer().click();
         document.dispatchEvent(this.playerStatsUpdatedEvent);
     }
-    executeOrder(item, quantity){
+
+    executeOrder(item, quantity) {
         const amount = item.calculateTotalCost(quantity);
         this.getPlayer().buyItem(amount);
         item.transact(quantity);
@@ -46,4 +56,4 @@ class Game{
     }
 }
 
-export { Game };
+export {Game};
